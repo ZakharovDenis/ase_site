@@ -1,8 +1,26 @@
 {% extends "static/static_files/html/ase_wrap.html" %}
 
 {% block content %}
+{% if object_list|length %}
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Тип</th>
+    <th>Наименование</th>
+    <th>Дата подачи</th>
+    <th>Статус</th>
+  </tr>
+  {% endif %}
   {%for post in object_list%}
-  <a href ="/request/{{post.id}}"><h3>{{post.title}}</h3>
-    <h5> {{post.date|date:"d-m-Y"}}</h5>
+  <tr>
+    <td><a href ="/request/{{post.id}}">{{post.id}}</a></td>
+    <td>{{post.req_type}}</td>
+    <td>Что тут должно быть?</td>
+    <td>{{post.date|date:"d-m-Y"}}</td>
+    <td>{{post.status}}</td>
+  </tr>
+  {% empty %}
+        Нет созданных отчетов.
   {%endfor%}
+</table>
 {% endblock %}

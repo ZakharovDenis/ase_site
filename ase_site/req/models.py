@@ -1,5 +1,5 @@
 from django.db import models
-from .choises import OK_CHOISES, INST_TYPE, DELIVERY
+from .choises import OK_CHOISES, INST_TYPE, DELIVERY, TYPE, STATUS
 from datetime import date
 
 class SendRequest(models.Model):
@@ -22,6 +22,8 @@ class SendRequest(models.Model):
     req_resiver=models.CharField(('Заявку принял'),max_length=120)
     OSR_specialis=models.CharField(('Специалист ОСР'),max_length=120)
     date = models.DateField(default=date.today())
+    status = models.IntegerField(default=3)
+    req_type = models.IntegerField(('Материал'),choices=TYPE)
 
     class Meta:
         verbose_name='Запрос'

@@ -1,11 +1,107 @@
-a.cont {
-  color: rgb(0,101,172); /* цвет текста */
-  text-decoration: none; /* убирать подчёркивание у ссылок */
-  user-select: none; /* убирать выделение текста */
-  background: #fff; /* фон кнопки */
-  border: .1em solid rgb(0,101,172);
-  padding: .7em 1.5em; /* отступ от текста */
-  outline: none; /* убирать контур в Mozilla */
-  border-radius: .10em;
-  position: center;
+.body{
+  margin: 0;
+  background: "white";
+  margin: 0;
+}
+.navbar {
+  overflow: hidden;
+  background-color: rgb(0, 64, 112);
+  position: sticky;
+  top: 0;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  font-size: 1em;
+  padding: 1em 1.5em;
+  text-decoration: none;
+}
+.navbar a.right {
+  float: right;
+}
+.navbar a.active {
+  background-color: #666;
+  color: white;
+}
+
+.navbar a:hover {
+  background-color: rgb(0, 95, 168);
+}
+
+.dropdown {
+  position: relative;
+  float: left;
+  display: block;
+}
+
+.dropbtn {
+  background-color: rgb(0, 64, 112);
+  display: block;
+  color: white;
+  padding: 16px;
+  font-size: 1em;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: rgb(0, 64, 112);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.navbar:hover .dropdown:hover{
+  padding-top: 0;
+  padding-bottom: 2.5em;
+  padding-left: 0em;
+  padding-right: 3.81em;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: rgb(0, 95, 168);
+}
+
+.dropdown:hover .dropbtn {
+  background-color: rgb(0, 95, 168);
+}
+
+@media screen and (max-width: 35em) {
+  .navbar a {
+    padding: 0.5em;
+    float: none;
+    width: 100%;
+  }
+  .navbar a.right {
+    float: none;
+  }
+  .dropdown{
+    float: none;
+    text-align:center;
+  }
+  .dropbtn{
+    float: none;
+    display:inline-block;
+  }
+  .dropdown-content{
+    float: none;
+    display:block;
+  }
 }

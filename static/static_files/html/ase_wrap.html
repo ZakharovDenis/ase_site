@@ -6,19 +6,26 @@
   <meta http-equip ="X-UA-Compatible" content="ie=edge">
   <title>Стройконтроль АСЭ</title>
   {% load staticfiles %}
-  <link rel="stylesheet" href="{% static 'css/buttons.css'%}" type="text/css">
-  <!--<link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">-->
+  <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css">
 </head>
-<body style="background: white">
-    <p>
-      <a href="/" class="btnreg">Главная страница</a>
-      <a href="/geo" class="btnreg">Карта &raquo;</a>
-      <a href="/request/create" class="btnsec">Создать запрос &raquo;</a>
-      <a href="/auth/logout" class="btnsec" align="left">Выйти</a>
-    </p>
+<body style="margin: 0">
+  <div class = "navbar">
+    <a href="/request/all">Созданные запросы</a>
+    <a href="/geo">Карта </a>
+    <div class="dropdown">
+        <button class="dropbtn">Создать запрос</button>
+        <div class="dropdown-content">
+          <a href="/request/create/concrete">Бетон</a>
+          <a href="/request/create/sand">Песок</a>
+          <a href="/request/create/PGS">ПГС</a>
+        </div>
+      </div>
+    <!-- <a href="/request/create">Создать запрос </a> -->
+    <a href="/auth/logout" class="right">Выйти</a>
+  </div>
+  <div class="content">
     {% block content %}
     {% endblock %}
   </div>
-</div>
 </body>
 </html>

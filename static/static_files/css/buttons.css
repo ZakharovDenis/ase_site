@@ -1,4 +1,3 @@
-
 .btnreg {
   color: rgb(0,101,172); /* цвет текста */
   text-decoration: none; /* убирать подчёркивание у ссылок */
@@ -27,7 +26,7 @@
   text-decoration: none; /* убирать подчёркивание у ссылок */
   user-select: none; /* убирать выделение текста */
   background: rgb(0,101,172); /* фон кнопки */
-  /*background: rgb(255,0,0); /* фон кнопки */
+  border: .1em solid rgb(0,101,172);
   padding: .7em 1.5em; /* отступ от текста */
   outline: none; /* убирать контур в Mozilla */
   border-radius: .5em;
@@ -45,6 +44,7 @@
   text-decoration: none; /* убирать подчёркивание у ссылок */
   user-select: none; /* убирать выделение текста */
   background: #fff; /* фон кнопки */
+  border: .1em solid white;
   padding: .7em 1.5em; /* отступ от текста */
   outline: none; /* убирать контур в Mozilla */
   border-radius: .5em;
