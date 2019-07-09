@@ -1,0 +1,52 @@
+body {
+margin: 0;
+padding: 0;
+font-family: sans-serif;
+background: no-repeat center center fixed;
+background-size: cover;
+}
+
+.login-box{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  color:rgb(23, 126, 204);
+  background-color: #FFFFFF ;
+  /* border: 0.2em solid #1B9CFC; */
+  /* border-radius: 1em; */
+  overflow: hidden;
+  opacity: 1;
+  padding-left: 2%;
+  padding-right: 2%;
+  max-width: 25em
+}
+
+.login-box h1{
+  font-size: 3em;
+  border-bottom: 0.1em solid rgb(23, 126, 204);;
+  overflow: inherit;
+}
+
+.login-box:hover{
+  opacity: 1;
+}
+
+
+.textbox{
+  width:100%;
+  overflow: hidden;
+  font-size: 1em;
+  padding: 0.5em 0;
+  margin: 0.5em 0;
+  border: 0.1em solid #FFFFFF;
+  border-bottom: 0.1em solid rgb(23, 126, 204);;
+
+
+  outline: none;
+  background: none;
+  color: rgb(23, 126, 204);;
+  float:left;
+  width: 95%;
+
+}

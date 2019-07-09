@@ -1,0 +1,22 @@
+{% extends "static/static_files/html/register_page.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    {%for val in values%}
+    <p>{{val}}</p>
+    {%endfor%}
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+    
+        {{ form }}
+
+    <input type="submit" value="Зарегистрироваться" class="btnmain">
+  </form>
+  <p><a href="/auth/login" class="btnsec">Войти</a></p>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,90 @@
+
+.btnreg {
+  color: rgb(0,101,172); /* цвет текста */
+  text-decoration: none; /* убирать подчёркивание у ссылок */
+  user-select: none; /* убирать выделение текста */
+  background: #fff; /* фон кнопки */
+  border: .1em solid rgb(0,101,172);
+  padding: .7em 1.5em; /* отступ от текста */
+  outline: none; /* убирать контур в Mozilla */
+  border-radius: .5em;
+  margin: auto;
+  overflow: hidden;
+  display: inline-block;
+}
+.btnreg:hover {
+  background: rgb(0,101,172);
+  color: #fff;
+} /* при наведении курсора мышки */
+.btnreg:active {
+  background: rgb(0,101,200);
+  border: .1em solid rgb(100,151,200);
+  color: #fff;
+} /* при нажатии */
+
+.btnmain{
+  color: #fff; /* цвет текста */
+  text-decoration: none; /* убирать подчёркивание у ссылок */
+  user-select: none; /* убирать выделение текста */
+  background: rgb(0,101,172); /* фон кнопки */
+  /*background: rgb(255,0,0); /* фон кнопки */
+  padding: .7em 1.5em; /* отступ от текста */
+  outline: none; /* убирать контур в Mozilla */
+  border-radius: .5em;
+  margin: auto;
+  overflow: hidden;
+  display: inline-block;
+}
+.btnmain:hover {
+  background: rgb(0,85,135);
+  color: #fff;
+} /* при наведении курсора мышки */
+
+.btnsec{
+  color: rgb(0,101,172); /* цвет текста */
+  text-decoration: none; /* убирать подчёркивание у ссылок */
+  user-select: none; /* убирать выделение текста */
+  background: #fff; /* фон кнопки */
+  padding: .7em 1.5em; /* отступ от текста */
+  outline: none; /* убирать контур в Mozilla */
+  border-radius: .5em;
+  margin: auto;
+  overflow: hidden;
+  display: inline-block;
+}
+.btnsec:hover {
+  border: .1em solid rgb(0,101,172);
+} /* при наведении курсора мышки */
+
+.btnyes{
+  color: #fff; /* цвет текста */
+  text-decoration: none; /* убирать подчёркивание у ссылок */
+  user-select: none; /* убирать выделение текста */
+  background: rgb(42, 131, 1); /* фон кнопки */
+  /*background: rgb(255,0,0); /* фон кнопки */
+  padding: .7em 1.5em; /* отступ от текста */
+  outline: none; /* убирать контур в Mozilla */
+  border-radius: .5em;
+  margin: auto;
+  overflow: hidden;
+  display: inline-block;
+}
+.btnyes:hover {
+  background: rgb(26, 80, 1); 
+}
+.btnno{
+  color: #fff; /* цвет текста */
+  text-decoration: none; /* убирать подчёркивание у ссылок */
+  user-select: none; /* убирать выделение текста */
+  background: rgb(134, 11, 2); /* фон кнопки */
+  /*background: rgb(255,0,0); /* фон кнопки */
+  padding: .7em 1.5em; /* отступ от текста */
+  outline: none; /* убирать контур в Mozilla */
+  border-radius: .5em;
+  margin: auto;
+  overflow: hidden;
+  display: inline-block;
+}
+.btnno:hover {
+  background: rgb(87, 6, 0); 
+}

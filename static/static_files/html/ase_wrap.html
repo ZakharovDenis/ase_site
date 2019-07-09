@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="eng">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewpoint" content="width-device-width, initial-scale=1.0">
+  <meta http-equip ="X-UA-Compatible" content="ie=edge">
+  <title>Стройконтроль АСЭ</title>
+  {% load staticfiles %}
+  <link rel="stylesheet" href="{% static 'css/buttons.css'%}" type="text/css">
+  <!--<link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">-->
+</head>
+<body style="background: white">
+    <p>
+      <a href="/" class="btnreg">Главная страница</a>
+      <a href="/geo" class="btnreg">Карта &raquo;</a>
+      <a href="/request/create" class="btnsec">Создать запрос &raquo;</a>
+      <a href="/auth/logout" class="btnsec" align="left">Выйти</a>
+    </p>
+    {% block content %}
+    {% endblock %}
+  </div>
+</div>
+</body>
+</html>

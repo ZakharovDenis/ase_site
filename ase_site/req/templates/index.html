@@ -1,0 +1,19 @@
+{% extends "static/static_files/html/ase_wrap.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Запрос документа</title>
+</head>
+<body>
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+    <table>
+        {{ form }}
+    </table>
+    <input type="submit" value="Отправить запрос" class="btnmain">
+  </form>
+</body>
+</html>
+{% endblock %}

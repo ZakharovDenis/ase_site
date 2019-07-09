@@ -1,0 +1,8 @@
+{% extends "static/static_files/html/ase_wrap.html" %}
+
+{% block content %}
+  {%for post in object_list%}
+  <a href ="/request/{{post.id}}"><h3>{{post.title}}</h3>
+    <h5> {{post.date|date:"d-m-Y"}}</h5>
+  {%endfor%}
+{% endblock %}

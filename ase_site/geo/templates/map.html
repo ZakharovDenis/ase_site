@@ -1,0 +1,25 @@
+{% load leaflet_tags %}
+{% leaflet_css %}
+{% leaflet_js %}
+
+<style>
+    .leaflet-container {  /* all maps */
+        width:  100em;
+        height: 50em;
+    }
+</style>
+<div>
+    <p>{{x}} {{y}}</p>
+    {% leaflet_map "main" callback="map_init" %}
+</div>
+<!-- <meta http-equiv="refresh" content="10" /> -->
+<script type="text/javascript">
+    function map_init(map, options) {
+        // get point lat and lon
+        var lon = {{ y }};
+        var lat = {{ x }};
+        // zoom to point & add it to map
+        map.setView([lat, lon], 12);
+        L.marker([lat, lon]).addTo(map);
+    }
+</script>

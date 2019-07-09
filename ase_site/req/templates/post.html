@@ -1,0 +1,21 @@
+{% extends "static/static_files/html/ase_wrap.html" %}
+
+{% block content %}
+
+<h2 class="text-info">{{sendrequest.concrete_make_org}}</h2>
+<h2 class="text-info">{{sendrequest.date|date:"d-m-Y"}}</h2>
+<p>{{sendrequest.delivery|safe|linebreaks}}</p>
+<!--
+<form method="POST">
+  {% csrf_token %}
+  <!--{% if sendrequest_id %}
+  <input type="hidden" value='{{ sendrequest_id }}' id='sendrequest_id' name='sendrequest_id'/>
+  {% endif %}
+  <input type="hidden" name="postid" value="{{sendrequest.id}}">
+  <input type="submit" value="Approve" class="btnmain">
+</form>-->
+
+<a href="approve/" class="btnyes">Подтвердить запрос</a>
+<a href="disapprove/" class="btnno">Отклонить запрос</a>
+{% endblock %}
+<!--<a href="{% url 'request/approve' sendrequest.id.pk %}" class="btnmain">Подтвердить запрос</a>-->

@@ -1,0 +1,25 @@
+{% load static %}<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Генератор отчетов</title>
+    <link rel="stylesheet" type="text/css" href="{% static "main.css" %}">
+    {% block header %}
+    {% endblock %}
+</head>
+<body>
+    {% now "Y" as YEAR %}
+    {% now "m" as MONTH %}
+    {% now 'd' as DAY %}
+<div class=buttons>
+    <a href="{% url 'daily_reports' %}" class=btn>Отчеты в DOCX</a>
+    <a href="{% url 'daily_reports_for_year' YEAR %}" class=btn>Отчеты за этот год</a>
+    <a href="{% url 'daily_reports_for_month' YEAR MONTH %}" class="btn">Отчеты за этот месяц</a>
+    <a href="{% url 'daily_reports_for_day' YEAR MONTH DAY %}" class="btn">Отчеты за сегодня</a>
+    <a href="{% url 'password_change' %}" class=btn>Именить пароль</a>
+    <a href="{% url 'logout' %}" class=btn>Выйти</a>
+</div>
+{% block content %}
+{% endblock %}
+</body>
+</html>
