@@ -8,11 +8,8 @@
   background-color: rgb(0, 64, 112);
   position: sticky;
   top: 0;
-<<<<<<< HEAD
-=======
   z-index: 10;
   /* transition: padding 1s ease-out 0.5s; */
->>>>>>> a2e5e20760b6fd991b4b4cbb398375c5c0267d8f
 }
 
 .navbar a {
@@ -35,21 +32,15 @@
 .navbar a:hover {
   background-color: rgb(0, 95, 168);
 }
-<<<<<<< HEAD
-=======
 .navbar .dropdown:hover{
   background-color: rgb(0, 95, 168);
 }
->>>>>>> a2e5e20760b6fd991b4b4cbb398375c5c0267d8f
 
 .dropdown {
   position: relative;
   float: left;
   display: block;
-<<<<<<< HEAD
-=======
   transition: padding 0.1s ease-in-out 0.1s;
->>>>>>> a2e5e20760b6fd991b4b4cbb398375c5c0267d8f
 }
 
 .dropbtn {
@@ -104,36 +95,24 @@
     float: none;
     width: 100%;
   }
-<<<<<<< HEAD
-=======
   .navbar:hover .dropdown:hover{
     padding-top: 0;
     padding-bottom: 0em;
     padding-left: 0em;
     padding-right: 0em;
   }
->>>>>>> a2e5e20760b6fd991b4b4cbb398375c5c0267d8f
   .navbar a.right {
     float: none;
   }
   .dropdown{
     float: none;
     text-align:center;
-<<<<<<< HEAD
-=======
     width: 100%;
     transition: bottom 0.1s ease-in-out 0.1s;
->>>>>>> a2e5e20760b6fd991b4b4cbb398375c5c0267d8f
   }
   .dropbtn{
     float: none;
     display:inline-block;
-<<<<<<< HEAD
-  }
-  .dropdown-content{
-    float: none;
-    display:block;
-=======
     padding: 0.5em; 
     text-align: center;
     transition: bottom 0.1s ease-in-out 0.1s;
@@ -143,6 +122,5 @@
     display: none;
     position: relative;
     transition: padding 0.1s ease-in-out 0.1s;
->>>>>>> a2e5e20760b6fd991b4b4cbb398375c5c0267d8f
   }
 }
