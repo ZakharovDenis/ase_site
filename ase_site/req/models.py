@@ -1,6 +1,5 @@
 from django.db import models
 from .choises import OK_CHOISES, INST_TYPE, DELIVERY, TYPE, STATUS
-from django.utils import timezone
 
 class SendRequest(models.Model):
     concrete_make_org=models.CharField(('Организация-изготовитель бетонной смеси'),max_length=120)
