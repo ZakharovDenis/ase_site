@@ -1,6 +1,6 @@
 from django.db import models
-from .choises import OK_CHOISES, INST_TYPE, DELIVERY
-from datetime import date
+from .choises import OK_CHOISES, INST_TYPE, DELIVERY, TYPE, STATUS
+from django.utils import timezone
 
 class SendRequest(models.Model):
     concrete_make_org=models.CharField(('Организация-изготовитель бетонной смеси'),max_length=120)
@@ -21,7 +21,9 @@ class SendRequest(models.Model):
     req_sender=models.CharField(('Заявку передал'),max_length=120)
     req_resiver=models.CharField(('Заявку принял'),max_length=120)
     OSR_specialis=models.CharField(('Специалист ОСР'),max_length=120)
-    date = models.DateField(default=date.today())
+    date = models.DateField(auto_now_add=True, blank = False)
+    status = models.IntegerField(default=3)
+    req_type = models.IntegerField(('Материал'),choices=TYPE)
 
     class Meta:
         verbose_name='Запрос'

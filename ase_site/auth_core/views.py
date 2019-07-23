@@ -14,7 +14,10 @@ def login_view(request):
         return redirect(r"/")
     else:
         if request.method == "POST":
-            nxt = request.GET['next']
+            try:
+                nxt = request.GET['next']
+            except:
+                nxt=""
             one = request.POST.get("Login")
             two = request.POST.get("Password")
             user= authenticate(email=one,password=two)
@@ -45,7 +48,7 @@ def register_view(request):
         form=UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(r'/')
+            return render(request,"ase_site/auth_core/templates/wait.html")
     else:
         form=UserForm()
     args['form']=form

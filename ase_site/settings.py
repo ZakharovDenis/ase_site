@@ -46,7 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'ase_site.force_auth.ForceAuthenticationMiddleware'
+    'ase_site.auth_core.force_auth.ForceAuthenticationMiddleware'
 ]
 
 ROOT_URLCONF = 'ase_site.urls'

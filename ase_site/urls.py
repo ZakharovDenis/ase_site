@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^geo/', include('ase_site.geo.urls')),
     url(r'^auth/', include('ase_site.auth_core.urls')),
-    path("", RedirectView.as_view(url='/request/')),
+    path("", RedirectView.as_view(url='/request/all/')),
     url(r'^request/', include('ase_site.req.urls')),
 ]
 if settings.DEBUG:
