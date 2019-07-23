@@ -1,0 +1,28 @@
+tbody tr th{
+    text-align: left;
+}
+body .content{
+    overflow: hidden;
+    text-align: center;
+}
+form{
+    display: inline-block;
+}
+td{
+    width: 15em;
+    border: 0.1em solid #FFFFFF;
+    border-bottom: 0.1em solid rgb(0, 0, 0);
+}
+select{
+    width: 100%;
+    outline: none;
+    border: none;
+}
+input{
+    width: 100%;
+    border: none;
+}
+input:active{
+    width: 100%;
+    border: none;
+}
