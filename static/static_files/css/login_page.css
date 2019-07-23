@@ -24,7 +24,7 @@ background-size: cover;
 
 .login-box h1{
   font-size: 3em;
-  border-bottom: 0.1em solid rgb(23, 126, 204);;
+  border-bottom: 0.1em solid rgb(23, 126, 204);
   overflow: inherit;
 }
 
@@ -40,13 +40,10 @@ background-size: cover;
   padding: 0.5em 0;
   margin: 0.5em 0;
   border: 0.1em solid #FFFFFF;
-  border-bottom: 0.1em solid rgb(23, 126, 204);;
-
-
+  border-bottom: 0.1em solid rgb(23, 126, 204);
   outline: none;
   background: none;
   color: rgb(23, 126, 204);;
   float:left;
   width: 95%;
-
 }

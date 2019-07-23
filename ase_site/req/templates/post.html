@@ -1,6 +1,9 @@
 {% extends "static/static_files/html/ase_wrap.html" %}
-
 {% block content %}
+<head>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/buttons.css'%}" type="text/css">
+</head>
 
 <h2 class="text-info">{{sendrequest.concrete_make_org}}</h2>
 <h2 class="text-info">{{sendrequest.date|date:"d-m-Y"}}</h2>

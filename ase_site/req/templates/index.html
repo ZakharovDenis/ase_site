@@ -5,8 +5,12 @@
 <head>
     <meta charset="utf-8" />
     <title>Запрос документа</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/buttons.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/form-style.css'%}" type="text/css">
 </head>
 <body>
+    <div>
     <form method="POST" autocomplete="off">
         {% csrf_token %}
     <table>
@@ -14,6 +18,7 @@
     </table>
     <input type="submit" value="Отправить запрос" class="btnmain">
   </form>
+</div>
 </body>
 </html>
 {% endblock %}
