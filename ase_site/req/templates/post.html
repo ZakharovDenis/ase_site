@@ -3,8 +3,9 @@
 <head>
     {% load staticfiles %}
     <link rel="stylesheet" href="{% static 'css/buttons.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/form-style.css'%}" type="text/css">
 </head>
-
+<body>
 <h2 class="text-info">{{sendrequest.concrete_make_org}}</h2>
 <h2 class="text-info">{{sendrequest.date|date:"d-m-Y"}}</h2>
 <p>{{sendrequest.delivery|safe|linebreaks}}</p>
@@ -20,5 +21,6 @@
 
 <a href="approve/" class="btnyes">Подтвердить запрос</a>
 <a href="disapprove/" class="btnno">Отклонить запрос</a>
+</body>
 {% endblock %}
 <!--<a href="{% url 'request/approve' sendrequest.id.pk %}" class="btnmain">Подтвердить запрос</a>-->

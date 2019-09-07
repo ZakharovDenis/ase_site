@@ -8,7 +8,7 @@ class ForceAuthenticationMiddleware:
 
     def __call__(self, request):
         if not request.user.is_authenticated:
-            if '/auth/' not in request.path:
-                if request.path != settings.LOGIN_URL:
-                    return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+            if '/auth/' not in request.path and '/geo/' not in request.path:
+                    if request.path != settings.LOGIN_URL:
+                        return HttpResponseRedirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
         return self.get_response(request)

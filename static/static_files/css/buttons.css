@@ -76,7 +76,7 @@
   color: #fff; /* цвет текста */
   text-decoration: none; /* убирать подчёркивание у ссылок */
   user-select: none; /* убирать выделение текста */
-  background: rgb(134, 11, 2); /* фон кнопки */
+  background: rgb(119, 3, 28); /* фон кнопки */
   /*background: rgb(255,0,0); /* фон кнопки */
   padding: .7em 1.5em; /* отступ от текста */
   outline: none; /* убирать контур в Mozilla */
