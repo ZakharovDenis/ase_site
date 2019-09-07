@@ -122,6 +122,7 @@ def CreateRequest(request):
                 content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
             response['Content-Disposition'] = 'attachment; filename="reports.docx"'
             redirect('/')
+            return redirect('/')
             return response
     else:   
         form=MakeRequestForm()
