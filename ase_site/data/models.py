@@ -41,7 +41,7 @@ class GPS(models.Model):
         return str(self.id)
 
 class GPSdata(models.Model):
-    id = models.IntegerField(('ИД датчика'),primary_key=True,editable=False)
+    id_gps = models.ForeignKey(GPS, on_delete=models.DO_NOTHING)
     date=models.DateTimeField('Дата/время',editable=False)
     latitude=models.CharField('Широта',editable=False,blank=False, max_length=50)
     longitude=models.CharField('Долгота',editable=False,blank=False, max_length=50)
@@ -51,7 +51,7 @@ class GPSdata(models.Model):
         verbose_name_plural='Данные датчиков'
 
     def __str__(self):
-        return str(id)
+        return str(self.id)
 
 class Car(models.Model):
     id = models.AutoField(('ИД машины'),primary_key=True,editable=False)
