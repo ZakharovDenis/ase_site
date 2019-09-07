@@ -1,6 +1,7 @@
-from django.conf.urls import url
 from.import views
+from django.urls import path
 
-urlpatterns=[
-    url(r'^$', views.index, name='index'),
+urlpatterns = [
+    path('get', views.get_data, name='get_gps_data'),
+    path('post', views.post_data, name='post_gps_data'),
 ]
