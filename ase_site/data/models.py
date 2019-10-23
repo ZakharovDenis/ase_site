@@ -44,7 +44,7 @@ class GPS(models.Model):
 class GPSdata(models.Model):
     id = models.AutoField(primary_key=True,editable=False)
     id_gps = models.ForeignKey(GPS, on_delete=models.DO_NOTHING)
-    date=models.DateTimeField('Дата/время',editable=False, default=timezone.now())
+    date=models.DateTimeField('Дата/время',editable=False, auto_now_add=True)
     latitude=models.CharField('Широта',editable=False,blank=False, max_length=50)
     longitude=models.CharField('Долгота',editable=False,blank=False, max_length=50)
 

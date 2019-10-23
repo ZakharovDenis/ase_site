@@ -4,6 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewpoint" content="width-device-width, initial-scale=1.0">
   <meta http-equip ="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <script type="text/javascript">
+    var btn=$('.dropdown');
+    var hint = $(".dropdown-content");
+    var height = hint.clientHeight;
+    var width = hint.clientWidth;
+    btn.hover(function(e){
+    // btn.addEventListener('hover', function(){
+  if(hint.style.visibility == 'hidden'){
+    hint.style.visibility = 'visible';
+    //hint.style.opacity = '1';
+    hint.style.height = height + 'px';
+    hint.style.width = width + 'px';
+    hint.style.padding = '.5em';
+  }
+  else{
+    hint.style.visibility = 'hidden';
+    //hint.style.opacity = '0';
+    hint.style.height = '0';
+    hint.style.width = '0';
+    hint.style.padding = '0';
+  }
+
+});
+  </script>
   <title>Стройконтроль АСЭ</title>
   {% load staticfiles %}
   <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css">
