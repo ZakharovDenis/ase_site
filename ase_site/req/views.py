@@ -1,13 +1,5 @@
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login as auth_login
-from ase_site.auth_core.models import User
-from django.http import HttpResponse
-from ase_site.req.models import SendRequest
-from django.views.generic.base import View
-from django.shortcuts import get_object_or_404
-from django.views.generic import ListView, DetailView
-from django.shortcuts import redirect
-from docx import Document
+from django.views.generic import ListView
+
 from docx.shared import Inches
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -22,15 +14,17 @@ from .forms import MakeRequestForm
 from django.http import HttpResponse
 #from django.contrib.auth.models import User
 from datetime import date
-from ase_site.req.models import SendRequest
+from ase_site.data.models import ApplicationForm
 from docx import Document
 from io import BytesIO
 
+
 class ViewAllRequests(ListView):
-    template_name="ase_site/req/templates/posts.html"
-    model = SendRequest
+    template_name = "ase_site/req/templates/posts.html"
+    model = ApplicationForm
+
     def get_queryset(self):
-        qs=super(ViewAllRequests,self).get_queryset()
+        qs = super(ViewAllRequests, self).get_queryset()
         # qs=qs.filter(
         #     #current_level = (self.request.user.level-1 or self.request.user.level)
         #     current_level=(self.request.user.level)
@@ -39,7 +33,8 @@ class ViewAllRequests(ListView):
         #return super(ViewAllRequests,self).get_queryset()
         return qs
 
-def approve(request,post_id):
+
+def approve(request, post_id):
     document = Document()
     document.add_picture('root_files/ase_logo.png', width=Inches(1.25))
     last_paragraph = document.paragraphs[-1]
@@ -48,11 +43,11 @@ def approve(request,post_id):
     last_paragraph = document.paragraphs[-1]
     last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
     document.add_heading('Запрос!', level=1)
-    req=SendRequest.objects.get(id=post_id)
+    req = ApplicationForm.objects.get(id=post_id)
     document.add_paragraph(req.post)
-    if req.status==0:
-        req.title=req.title+"(обработан)"
-        req.status=1
+    if req.status == 0:
+        req.title = req.title+"(обработан)"
+        req.status = 1
         req.save()
     else:
         req.save()
@@ -85,36 +80,41 @@ def approve(request,post_id):
     os.remove("root_files/test"+post_id+".docx")
     return render(request,'static/static_files/html/box.html', {'values':['Запрос отправлен']})
 
+
 def disapprove(request,post_id):
-    req=SendRequest.objects.get(id=post_id)
-    req.current_level=req.current_level-1
-    req.title="Запрос №"+str(req.id)+"(отклонен)"
+    req = ApplicationForm.objects.get(id=post_id)
+    req.current_level = req.current_level-1
+    req.title = "Запрос №"+str(req.id)+"(отклонен)"
     req.save()
     return render(request,'static/static_files/html/box.html', {'values':['Запрос отклонены']})
 
+
 def fill_word(data):
-    doc=Document('template.docx')
-    if doc.tables!=[]:
-        for table in doc.tables:
-            for cell in table._cells:
+    document = Document('template.docx')
+    paragraphs = []
+    for table in document.tables:
+        for row in table.rows:
+            for cell in row.cells:
                 for paragraph in cell.paragraphs:
-                    tmp=paragraph.text.lower()
-                    for i in range(len(data)):
-                        comp='var'+str(i+1)
-                        if comp == tmp.lower():
-                            tmp=tmp.replace(comp,data[i])
-                            paragraph.text=tmp
-    return doc
+                    paragraphs.append(paragraph)
+
+    for p in paragraphs:
+        if p.text in {str(i) for i in range(len(paragraphs))}:
+            p.text = data[int(p.text)]
+            print(p.text)
+
+    return document
+
 
 def CreateRequest(request):
-    if request.method=="POST":
-        form=MakeRequestForm(request.POST)
+    if request.method == "POST":
+        form = MakeRequestForm(request.POST)
         if form.is_valid():
-            data=[]
+            data = []
             for i in form.fields:
                 data.append(request.POST.get(str(i)))
-            doc=fill_word(data)
-            form.date=date.today()
+            doc = fill_word(data)
+            form.date = date.today()
             form.save()
             data = BytesIO()
             doc.save(data)
@@ -125,5 +125,5 @@ def CreateRequest(request):
             return redirect('/')
             return response
     else:   
-        form=MakeRequestForm()
+        form = MakeRequestForm()
     return render(request, "ase_site/req/templates/index.html", {"form": form})

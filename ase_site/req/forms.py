@@ -1,7 +1,8 @@
 from django import forms
-from ase_site.req.models import SendRequest
+from ase_site.data.models import ApplicationForm
+
 
 class MakeRequestForm(forms.ModelForm):
     class Meta():
-        model=SendRequest
-        exclude=('date','status',)
+        model = ApplicationForm
+        exclude = ('date', 'status',)
