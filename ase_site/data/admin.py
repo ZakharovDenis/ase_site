@@ -3,11 +3,11 @@ from ase_site.data.models import Car, Company, GPS, GPSdata
 
 
 class CarAdmin(admin.ModelAdmin):
-    list_display = ('id', 'car_type', 'gps')
+    list_display = ('car_type', 'gps')
     fieldsets=[
-        (None,  {'fields': ['id', 'car_type', 'gps']}),
+        (None,  {'fields': ['car_type', 'gps']}),
     ]
-    search_fields = ('id', 'car_type', 'gps')
+    search_fields = ('car_type', 'gps')
 
 
 class CompanyAdmin(admin.ModelAdmin):
