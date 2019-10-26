@@ -61,9 +61,9 @@ class Application(models.Model):
     status = models.IntegerField('На Какой Стадии Находится Заявка', choices=STATUS)
     application_type = models.IntegerField('Тип Заявки', choices=TYPE)
     density = models.FloatField('Плотность материала')
-    volume = models.FloatField('Объем')
     delivery_date = models.DateField('Дата Поставки')
     delivery_time = models.TimeField('Время Поставки')
+    volume = models.FloatField('Объем')
     car = models.ForeignKey(Car, on_delete=models.DO_NOTHING, verbose_name='Машина')
     manufacturer_org = models.ForeignKey(
         Company, on_delete=models.DO_NOTHING, verbose_name='Организация Изготовитель', related_name='manufacturer_org'

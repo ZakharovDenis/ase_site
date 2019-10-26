@@ -19,8 +19,11 @@
   <input type="submit" value="Approve" class="btnmain">
 </form>-->
 
+{% if not user.level == 1 %}
 <a href="approve/" class="btnyes">Подтвердить запрос</a>
 <a href="disapprove/" class="btnno">Отклонить запрос</a>
+{% endif %}
+<a href="print" class="btnreg">Сохранить WORD</a>
 </body>
 {% endblock %}
 <!--<a href="{% url 'request/approve' sendrequest.id.pk %}" class="btnmain">Подтвердить запрос</a>-->
