@@ -1,4 +1,4 @@
 from django.contrib import admin
-from ase_site.req.models import SendRequest
+from ase_site.data.models import Application
 
-admin.site.register(SendRequest)
+admin.site.register(Application)

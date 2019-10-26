@@ -56,19 +56,27 @@ class GPSdata(models.Model):
         return str(self.id)
 
 
-class ApplicationForm(models.Model):
+class Application(models.Model):
     status = models.IntegerField('На Какой Стадии Находится Заявка', choices=STATUS)
-    application_type = models.CharField('Тип Заявки', choices=TYPE)
+    application_type = models.IntegerField('Тип Заявки', choices=TYPE)
     density = models.FloatField('Плотность материала')
     volume = models.FloatField('Объем')
     delivery_date = models.DateField('Дата Поставки')
     delivery_time = models.TimeField('Время Поставки')
     car = models.ForeignKey(Car, on_delete=models.DO_NOTHING, verbose_name='Машина')
-    manufacturer_org = models.ForeignKey(Company, on_delete=models.DO_NOTHING, verbose_name='Организация Изготовитель')
-    performing_org = models.ForeignKey(Company, on_delete=models.DO_NOTHING, verbose_name='Организация Исполнитель')
-    application_sender = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name='Заявитель')
-    application_receiver = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name='Заявку Принял')
-    ocr_specialist = models.ForeignKey(User, on_delete=models.DO_NOTHING, verbose_name='Специалист ОСР')
+    manufacturer_org = models.ForeignKey(
+        Company, on_delete=models.DO_NOTHING, verbose_name='Организация Изготовитель', related_name='manufacturer_org'
+    )
+    performing_org = models.ForeignKey(
+        Company, on_delete=models.DO_NOTHING, verbose_name='Организация Исполнитель', related_name='performing_org'
+    )
+    application_sender = models.ForeignKey(
+        User, on_delete=models.DO_NOTHING, verbose_name='Заявитель', related_name='application_sender'
+    )
+    application_receiver = models.ForeignKey(
+        User, on_delete=models.DO_NOTHING, verbose_name='Заявку Принял', related_name='application_receiver'
+    )
+    ocr_specialist = models.CharField('Специалист ОСР', max_length=120)
 
     class Meta:
         verbose_name = 'Заявка'

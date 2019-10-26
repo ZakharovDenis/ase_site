@@ -14,23 +14,17 @@ from .forms import MakeRequestForm
 from django.http import HttpResponse
 #from django.contrib.auth.models import User
 from datetime import date
-from ase_site.data.models import ApplicationForm
+from ase_site.data.models import Application
 from docx import Document
 from io import BytesIO
 
 
 class ViewAllRequests(ListView):
     template_name = "ase_site/req/templates/posts.html"
-    model = ApplicationForm
+    model = Application
 
     def get_queryset(self):
         qs = super(ViewAllRequests, self).get_queryset()
-        # qs=qs.filter(
-        #     #current_level = (self.request.user.level-1 or self.request.user.level)
-        #     current_level=(self.request.user.level)
-        # ).filter(firm=self.request.user.firm_name)
-        #queryset=SendRequest.objects.filter(current_level=self.request.user.level)
-        #return super(ViewAllRequests,self).get_queryset()
         return qs
 
 
@@ -43,7 +37,7 @@ def approve(request, post_id):
     last_paragraph = document.paragraphs[-1]
     last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
     document.add_heading('Запрос!', level=1)
-    req = ApplicationForm.objects.get(id=post_id)
+    req = Application.objects.get(id=post_id)
     document.add_paragraph(req.post)
     if req.status == 0:
         req.title = req.title+"(обработан)"
@@ -78,15 +72,15 @@ def approve(request, post_id):
     attachment.close()
     #time.sleep(15)
     os.remove("root_files/test"+post_id+".docx")
-    return render(request,'static/static_files/html/box.html', {'values':['Запрос отправлен']})
+    return render(request, 'static/static_files/html/box.html', {'values': ['Запрос отправлен']})
 
 
-def disapprove(request,post_id):
-    req = ApplicationForm.objects.get(id=post_id)
+def disapprove(request, post_id):
+    req = Application.objects.get(id=post_id)
     req.current_level = req.current_level-1
     req.title = "Запрос №"+str(req.id)+"(отклонен)"
     req.save()
-    return render(request,'static/static_files/html/box.html', {'values':['Запрос отклонены']})
+    return render(request, 'static/static_files/html/box.html', {'values': ['Запрос отклонены']})
 
 
 def fill_word(data):
