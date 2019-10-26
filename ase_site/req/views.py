@@ -6,6 +6,7 @@ from datetime import date
 from django.views.generic import ListView
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.core import serializers
 
 from docx import Document
 from docx.shared import Inches
@@ -30,7 +31,7 @@ class ViewAllRequests(ListView):
         return qs
 
 
-def approve(request, post_id):
+def approve2(request, post_id):
     document = Document()
     document.add_picture('root_files/ase_logo.png', width=Inches(1.25))
     last_paragraph = document.paragraphs[-1]
@@ -117,29 +118,34 @@ def create_request(request, application_type):
                 manufacturer_org=form.cleaned_data['manufacturer_org'],
                 performing_org=form.cleaned_data['performing_org'],
                 application_sender=request.user,
-                application_receiver=form.cleaned_data['application_receiver']
+                application_receiver=form.cleaned_data['application_receiver'],
+                ocr_specialist=form.cleaned_data['ocr_specialist']
             )
             application.save()
-
-            # firm_name = current_user.firm_name
-            # current_level = current_user.level
-            # form.application_receiver = User.objects.filter(firm_name=firm_name).filter(current_level+1)
-
-            # data = []
-            # for i in form.fields:
-            #     data.append(request.POST.get(str(i)))
-            # doc = fill_word(data)
-            # form.date = date.today()
-            # data = BytesIO()
-            # doc.save(data)
-            # response = HttpResponse(data.getvalue(),
-            #     content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-            # response['Content-Disposition'] = 'attachment; filename="reports.docx"'
             return redirect('/')
             return response
     else:   
         form = MakeRequestForm()
     return render(request, "ase_site/req/templates/index.html", {"form": form})
+
+
+def create_word(request, id_):
+    application = Application.objects.get(id=id_)
+    fields = application._meta.get_fields()
+    data = []
+    for f in fields:
+        if not str(f.name) == 'status':
+            if str(f.name) == 'application_type':
+                data.append(application.get_application_type_display())
+            else:
+                data.append(str(getattr(application, f.name)))
+    doc = fill_word(data[1:])
+    data = BytesIO()
+    doc.save(data)
+    response = HttpResponse(data.getvalue(),
+        content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response['Content-Disposition'] = 'attachment; filename="reports.docx"'
+    return response
 
 
 def create_beton_request(request):
@@ -152,3 +158,32 @@ def create_sand_request(request):
 
 def create_PGS_request(request):
     return create_request(request, 3)
+
+
+def show_application(request, id_):
+    application = Application.objects.get(id=id_)
+    user = request.user
+    return render(request, "ase_site/req/templates/post.html", {'user': user, "application": application} )
+
+
+def show_all_applications(request):
+    user = request.user
+    print(user)
+    print(user.level)
+    if user.level == 1:
+        applications = Application.objects.filter(application_sender=user)
+    elif user.level == 2:
+        applications = Application.objects.all()
+    elif user.level == 3:
+        applications = Application.objects.filter(status=3)
+    else:
+        applications = Application.objects.all()
+    applications = applications.order_by("-delivery_date")
+    return render(request, "ase_site/req/templates/posts.html", {'object_list': applications})
+
+
+def approve(request, id_):
+    application = Application.objects.get(id=id_)
+    application.status = 3
+    application.save()
+    return redirect('/')

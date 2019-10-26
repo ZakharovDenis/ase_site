@@ -17,7 +17,7 @@
     L.marker([lat, lon]).addTo(map);
   }
   $(document).ready(function () {
-    $(".request").click(function (e) {
+    $(".request____delete_me____").click(function (e) {
       var mapdiv = $('td.right')
       if (mapdiv.is(':visible')) {
         mapdiv.hide();
@@ -76,7 +76,8 @@
           {% endif %}
           {%for post in object_list%}
           <tr class='request' id="{{forloop.counter}}" style="cursor: pointer">
-            <!-- <td><a href ="/request/{{post.id}}">{{post.id}}</a></td> -->
+            <td><a href ="/request/{{post.id}}">{{post.id}}</a></td>
+{#            <td>{{post.id}}</td>#}
             <td>{{post.req_type}}</td>
             <td>Что тут должно быть?</td>
             <td>{{post.delivery_date|date:"d-m-Y"}}</td>
@@ -88,11 +89,11 @@
         </table>
       </td>
       <td class=right>
-          <h2 class="text-info">Запрос №1</h2>
+          <h2 class="text-info">Запрос {{post.id}}</h2>
           <h2 class="text-info">Информация о запросе</h2>
           <p>{{sendrequest.delivery|safe|linebreaks}}</p>
-          <a href="approve/" class="btnyes">Подтвердить запрос</a>
-          <a href="disapprove/" class="btnno">Отклонить запрос</a>
+          <a href="/request/{{post.id}}/approve/" class="btnyes">Подтвердить запрос</a>
+          <a href="/request/{{post.id}}/disapprove/" class="btnno">Отклонить запрос</a>
         <div class=".leaflet-container">
           {% leaflet_map "main" %}
         </div>

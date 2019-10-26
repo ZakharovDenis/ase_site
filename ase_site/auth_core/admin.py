@@ -13,14 +13,14 @@ class UserAdmin(BaseUserAdmin):
     add_form=UserAdminCreationForm
     #class Meta:
     #    model=User
-    list_display=('email','first_name','last_name','fathers_name')
+    list_display=('email','first_name','last_name','fathers_name', )
     #list_display=('email','is_admin')
     list_filter=('firm_name','level','is_active',)
     fieldsets=(
         (None,{'fields':('email','password')}),
-        ('Линая информация',{'fields':('first_name','last_name','fathers_name')}),
-        ('Рабочая информация',{'fields':('firm_name','level',)}),
-        ('Активация',{'fields':('is_active',)})
+        ('Линая информация', {'fields': ('first_name', 'last_name', 'fathers_name')}),
+        ('Рабочая информация', {'fields': ('firm_name', 'level',)}),
+        ('Активация', {'fields':('is_active',)})
     )
     add_fieldsets=(
         (None,{
@@ -32,5 +32,6 @@ class UserAdmin(BaseUserAdmin):
     ordering = ('email',)
     filter_horizontal = ()
 
-admin.site.register(User,UserAdmin)
+
+admin.site.register(User, UserAdmin)
 admin.site.unregister(Group)
