@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+
 from .choices import STATUS_CHOICES
+from ase_site.data.models import Company
 
 
 class UserManager(BaseUserManager):
@@ -34,7 +36,9 @@ class User(AbstractBaseUser):
     fathers_name = models.CharField(('Отчетсво'),max_length=30, blank=True, null=True)
     date_joined = models.DateTimeField(('Дата регистрации'),auto_now_add=True)
     is_active = models.BooleanField(('Активирован'), default=False)
-    firm_name = models.CharField(('Название фирмы'),max_length=255, blank=True, null=True)
+    firm_name = models.ForeignKey(
+        Company, on_delete=models.DO_NOTHING, verbose_name='Название', related_name='firm_name'
+    )
     level = models.IntegerField(('Статус сотрудника'), choices=STATUS_CHOICES, blank=True, null=True)
     is_staff = models.BooleanField(('Стаф'), default=False)
     is_admin = models.BooleanField(('Админ'), default=False)
@@ -51,7 +55,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     def __str__(self):
-        return self.email
+        return f"{self.last_name} {self.first_name} {self.fathers_name}"
 
     def has_perm(self, perm, obj=None):
         return True

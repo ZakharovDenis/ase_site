@@ -1,7 +1,6 @@
 from django.db import models
 
 from .choises import STATUS, TYPE
-from ase_site.auth_core.models import User
 
 
 class Company(models.Model):
@@ -38,7 +37,7 @@ class Car(models.Model):
         verbose_name_plural = 'Машины'
 
     def __str__(self):
-        return str(self.id)
+        return str(self.car_type)
 
 
 class GPSdata(models.Model):
@@ -57,6 +56,8 @@ class GPSdata(models.Model):
 
 
 class Application(models.Model):
+    from ase_site.auth_core.models import User
+
     status = models.IntegerField('На Какой Стадии Находится Заявка', choices=STATUS)
     application_type = models.IntegerField('Тип Заявки', choices=TYPE)
     density = models.FloatField('Плотность материала')
