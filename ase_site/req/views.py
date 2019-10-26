@@ -102,56 +102,25 @@ def fill_word(data):
     return document
 
 
-
-    status = models.IntegerField('На Какой Стадии Находится Заявка', choices=STATUS)
-    application_type = models.IntegerField('Тип Заявки', choices=TYPE)
-    density = models.FloatField('Плотность материала')
-    volume = models.FloatField('Объем')
-    delivery_date = models.DateField('Дата Поставки')
-    delivery_time = models.TimeField('Время Поставки')
-    car = models.ForeignKey(Car, on_delete=models.DO_NOTHING, verbose_name='Машина')
-    manufacturer_org = models.ForeignKey(
-        Company, on_delete=models.DO_NOTHING, verbose_name='Организация Изготовитель', related_name='manufacturer_org'
-    )
-    performing_org = models.ForeignKey(
-        Company, on_delete=models.DO_NOTHING, verbose_name='Организация Исполнитель', related_name='performing_org'
-    )
-    application_sender = models.ForeignKey(
-        User, on_delete=models.DO_NOTHING, verbose_name='Заявитель', related_name='application_sender'
-    )
-    application_receiver = models.ForeignKey(
-        User, on_delete=models.DO_NOTHING, verbose_name='Заявку Принял', related_name='application_receiver'
-    )
-    ocr_specialist
-
-def CreateRequest(request, application_type):
+def create_request(request, application_type):
     if request.method == "POST":
         form = MakeRequestForm(request.POST)
         if form.is_valid():
-            print(form['application_receiver'])
-            application_receiver = User.objects.get(
-                last_name=form['application_receiver'][0],
-                first_name=form['application_receiver'][1],
-                fathers_name=['application_receiver'][2]
-            )
-
-            print(application_receiver)
-            print(application_receiver.id)
-
             application, _ = Application.objects.update_or_create(
                 application_type=application_type,
                 status=2,
-                density=form['density'],
-                volume=form['volume'],
-                delivery_date=form['delivery_date'],
-                delivery_time=form['delivery_time'],
-                car=form['car'],
-                manufacturer_org=form['manufacturer_org'],
-                performing_org=form['performing_org'],
+                density=form.cleaned_data['density'],
+                volume=form.cleaned_data['volume'],
+                delivery_date=form.cleaned_data['delivery_date'],
+                delivery_time=form.cleaned_data['delivery_time'],
+                car=form.cleaned_data['car'],
+                manufacturer_org=form.cleaned_data['manufacturer_org'],
+                performing_org=form.cleaned_data['performing_org'],
                 application_sender=request.user,
-                application_receiver=application_receiver
+                application_receiver=form.cleaned_data['application_receiver']
             )
             application.save()
+
             # firm_name = current_user.firm_name
             # current_level = current_user.level
             # form.application_receiver = User.objects.filter(firm_name=firm_name).filter(current_level+1)
@@ -174,12 +143,12 @@ def CreateRequest(request, application_type):
 
 
 def create_beton_request(request):
-    return CreateRequest(request, 1)
+    return create_request(request, 1)
 
 
 def create_sand_request(request):
-    return CreateRequest(request, 2)
+    return create_request(request, 2)
 
 
 def create_PGS_request(request):
-    return CreateRequest(request, 3)
+    return create_request(request, 3)
