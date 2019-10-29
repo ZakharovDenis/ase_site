@@ -38,7 +38,7 @@
 <body style="margin: 0">
   <div class = "navbar">
     <a href="/request/all">Созданные запросы</a>
-    <a href="/geo">Карта </a>
+    <!-- <a href="/geo">Карта </a> -->
     <div class="dropdown">
         <button class="dropbtn">Создать запрос</button>
         <div class="dropdown-content">
@@ -50,7 +50,7 @@
     <!-- <a href="/request/create">Создать запрос </a> -->
 
     <a href="/auth/logout" class="right">Выйти</a>
-    <a class="right">{{ user }}</a>
+    <a class="right noHover">{{ user }}</a>
   </div>
   <div class="content">
     {% block content %}

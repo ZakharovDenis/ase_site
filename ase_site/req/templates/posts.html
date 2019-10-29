@@ -36,7 +36,7 @@
         // csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
         // },
         success: function (json) {
-          map_init(map = mapdiv.find($('main')),lat = json[0].fields.latitude, lon = json[0].fields.longitude)
+          map_init(map = mapdiv.find($('main')), lat = json[0].fields.latitude, lon = json[0].fields.longitude)
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
 
@@ -76,10 +76,8 @@
           {% endif %}
           {%for post in object_list%}
           <tr class='request' id="{{forloop.counter}}" style="cursor: pointer">
-            <td><a href ="/request/{{post.id}}">{{post.id}}</a></td>
-{#            <td>{{post.id}}</td>#}
-            <td>{{post.req_type}}</td>
-            <td>Что тут должно быть?</td>
+            <td><a href="/request/{{post.id}}">{{post.id}}</a></td>
+            <td>{{post.get_application_type_display}}</td>
             <td>{{post.delivery_date|date:"d-m-Y"}}</td>
             <td>{{post.status}}</td>
           </tr>
@@ -88,16 +86,16 @@
           {%endfor%}
         </table>
       </td>
-      <td class=right>
-          <h2 class="text-info">Запрос {{post.id}}</h2>
-          <h2 class="text-info">Информация о запросе</h2>
-          <p>{{sendrequest.delivery|safe|linebreaks}}</p>
-          <a href="/request/{{post.id}}/approve/" class="btnyes">Подтвердить запрос</a>
-          <a href="/request/{{post.id}}/disapprove/" class="btnno">Отклонить запрос</a>
+      <!-- <td class=right>
+        <h2 class="text-info">Запрос {{post.id}}</h2>
+        <h2 class="text-info">Информация о запросе</h2>
+        <p>{{sendrequest.delivery|safe|linebreaks}}</p>
+        <a href="/request/{{post.id}}/approve/" class="btnyes">Подтвердить запрос</a>
+        <a href="/request/{{post.id}}/disapprove/" class="btnno">Отклонить запрос</a>
         <div class=".leaflet-container">
           {% leaflet_map "main" %}
         </div>
-      </td>
+      </td> -->
     </tr>
   </table>
 </body>

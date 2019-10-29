@@ -4,13 +4,13 @@ from .widget import SelectTimeWidget
 
 
 class MakeRequestForm(forms.ModelForm):
-    delivery_date = forms.DateField(label='Дата Поставки', widget=forms.SelectDateWidget())
-    delivery_time = forms.TimeField(
-        label='Время Поставки', widget=SelectTimeWidget(
-            twelve_hr=False,
-            minute_step=5,
-            use_seconds=False)
-    )
+    # delivery_date = forms.DateField(label='Дата Поставки', widget=forms.SelectDateWidget())
+    # delivery_time = forms.TimeField(
+    #     label='Время Поставки', widget=SelectTimeWidget(
+    #         twelve_hr=False,
+    #         minute_step=5,
+    #         use_seconds=False)
+    # )
     # application_receiver = forms.ModelChoiceField(queryset=Usr)
 
     class Meta():

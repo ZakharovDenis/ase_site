@@ -40,21 +40,6 @@ class Car(models.Model):
         return str(self.car_type)
 
 
-class GPSdata(models.Model):
-    id = models.AutoField(primary_key=True, editable=False)
-    id_gps = models.ForeignKey(GPS, on_delete=models.DO_NOTHING)
-    date = models.DateTimeField('Дата/время', editable=False, auto_now_add=True)
-    latitude = models.CharField('Широта', editable=False, blank=False, max_length=50)
-    longitude = models.CharField('Долгота', editable=False, blank=False, max_length=50)
-
-    class Meta:
-        verbose_name = 'Данные Датчика'
-        verbose_name_plural = 'Данные Датчиков'
-
-    def __str__(self):
-        return str(self.id)
-
-
 class Application(models.Model):
     from ase_site.auth_core.models import User
 
@@ -82,3 +67,22 @@ class Application(models.Model):
     class Meta:
         verbose_name = 'Заявка'
         verbose_name_plural = 'Заявки'
+
+
+class GPSdata(models.Model):
+    id = models.AutoField(primary_key=True, editable=False)
+    id_gps = models.ForeignKey(GPS, on_delete=models.DO_NOTHING)
+    # application = models.ForeignKey(Application, on_delete=models.DO_NOTHING, verbose_name="Выполняемая заявка")
+    date = models.DateTimeField('Дата/время', editable=True, auto_now_add=True)
+    latitude = models.CharField('Широта', editable=True, blank=False, max_length=50)
+    longitude = models.CharField('Долгота', editable=True, blank=False, max_length=50)
+
+    class Meta:
+        verbose_name = 'Данные Датчика'
+        verbose_name_plural = 'Данные Датчиков'
+
+    def __str__(self):
+        return str((float(self.latitude), float(self.longitude)))
+
+    def get_tuple(self):
+        return (self.latitude, self.longitude)

@@ -1,3 +1,4 @@
+import json
 import os
 import smtplib
 from io import BytesIO
@@ -18,7 +19,7 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 
 from ase_site.auth_core.models import User
-from ase_site.data.models import Application
+from ase_site.data.models import Application, GPSdata
 from .forms import MakeRequestForm
 
 
@@ -63,7 +64,8 @@ def approve2(request, post_id):
     part = MIMEBase('application', 'octet-stream')
     part.set_payload((attachment).read())
     encoders.encode_base64(part)
-    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+    part.add_header('Content-Disposition',
+                    "attachment; filename= %s" % filename)
     msg.attach(part)
     server = smtplib.SMTP('smtp.mail.ru', 587)
     server.starttls()
@@ -73,7 +75,7 @@ def approve2(request, post_id):
     server.sendmail(fromaddr, toaddr, text)
     server.quit()
     attachment.close()
-    #time.sleep(15)
+    # time.sleep(15)
     os.remove("root_files/test"+post_id+".docx")
     return render(request, 'static/static_files/html/box.html', {'values': ['Запрос отправлен']})
 
@@ -98,8 +100,6 @@ def fill_word(data):
     for p in paragraphs:
         if p.text in {str(i) for i in range(len(paragraphs))}:
             p.text = data[int(p.text)]
-            print(p.text)
-
     return document
 
 
@@ -112,8 +112,8 @@ def create_request(request, application_type):
                 status=2,
                 density=form.cleaned_data['density'],
                 volume=form.cleaned_data['volume'],
-                delivery_date=form.cleaned_data['delivery_date'],
-                delivery_time=form.cleaned_data['delivery_time'],
+                delivery_date=request.POST.get('delivery_date'),
+                delivery_time=request.POST.get('delivery_time'),
                 car=form.cleaned_data['car'],
                 manufacturer_org=form.cleaned_data['manufacturer_org'],
                 performing_org=form.cleaned_data['performing_org'],
@@ -124,9 +124,31 @@ def create_request(request, application_type):
             application.save()
             return redirect('/')
             return response
-    else:   
+    else:
         form = MakeRequestForm()
     return render(request, "ase_site/req/templates/index.html", {"form": form})
+
+
+def create_tuples(request, id_):
+    application = Application.objects.get(id=id_)
+    fields = application._meta.get_fields()
+    data = []
+    for f in fields:
+        if not any(str(f.name) in s for s in ['status' 'id']):
+            if str(f.name) == 'application_type':
+                data.append(
+                    (str(f.verbose_name), application.get_application_type_display()))
+            else:
+                data.append((str(f.verbose_name), str(
+                    getattr(application, f.name))))
+    return data
+
+
+def get_coord_list(id_):
+    application = Application.objects.get(id=id_)
+    coord_list = GPSdata.objects.filter(id_gps=application.car.gps)
+    final_coord = [val.get_tuple() for val in coord_list]
+    return final_coord
 
 
 def create_word(request, id_):
@@ -143,7 +165,7 @@ def create_word(request, id_):
     data = BytesIO()
     doc.save(data)
     response = HttpResponse(data.getvalue(),
-        content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+                            content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
     response['Content-Disposition'] = 'attachment; filename="reports.docx"'
     return response
 
@@ -161,9 +183,12 @@ def create_PGS_request(request):
 
 
 def show_application(request, id_):
-    application = Application.objects.get(id=id_)
+    app = Application.objects.get(id=id_)
+    full_application = create_tuples(request, id_)
     user = request.user
-    return render(request, "ase_site/req/templates/post.html", {'user': user, "application": application} )
+    coord_list = get_coord_list(id_)
+    print(coord_list)
+    return render(request, "ase_site/req/templates/post.html", {'user': user, "application": full_application, 'app': app, "coord_list": coord_list})
 
 
 def show_all_applications(request):

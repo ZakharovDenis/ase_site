@@ -93,14 +93,21 @@ table.container {
   height: 100%;
 }
 .container .left {
-    width: 25%;
-    height: 100%;
-    vertical-align: top;
+  display: inline-block;
+  vertical-align: bottom;
+  width: 33%;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 .container .right {
-  height: 100%;
-  width: 75%;
-  display: none;
+  display: inline-block;
+  vertical-align: bottom;
+  max-height: 90vh;
+  width: 66%;
+}
+
+.noHover{
+  pointer-events: none;
 }
 
 @media screen and (max-width: 35em) {

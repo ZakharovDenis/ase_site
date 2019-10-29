@@ -26,16 +26,17 @@ class GPSAdmin(admin.ModelAdmin):
 
 
 class GPSdataAdmin(admin.ModelAdmin):
-    readonly_fields=('id', 'date', 'latitude', 'longitude')
+    # readonly_fields
+    list_display=('id', 'date', 'latitude', 'longitude')
     
     def has_add_permission(self, request, obj=None):
         return True
 
     def has_change_permission(self, request, obj=None):
-        return False
+        return True
 
     def has_delete_permission(self, request, obj=None):
-        return False
+        return True
 
 
 admin.site.register(Car, CarAdmin)

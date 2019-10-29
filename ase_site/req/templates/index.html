@@ -15,6 +15,14 @@
         {% csrf_token %}
     <table>
         {{ form }}
+        <tr>
+            <th><label for="id_delivery_date">Дата Поставки</label></th>
+            <td><input name="delivery_date" type="date" required id="id_delivery_date"></td>
+        </tr>
+        <tr>
+            <th><label  for="id_delivery_date">Время Поставки</label></th>
+            <td><input name="delivery_time" type="time" required id="id_delivery_date"></td>
+        </tr>
     </table>
     <input type="submit" value="Отправить запрос" class="btnmain">
   </form>
