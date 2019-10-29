@@ -187,14 +187,11 @@ def show_application(request, id_):
     full_application = create_tuples(request, id_)
     user = request.user
     coord_list = get_coord_list(id_)
-    print(coord_list)
     return render(request, "ase_site/req/templates/post.html", {'user': user, "application": full_application, 'app': app, "coord_list": coord_list})
 
 
 def show_all_applications(request):
     user = request.user
-    print(user)
-    print(user.level)
     if user.level == 1:
         applications = Application.objects.filter(application_sender=user)
     elif user.level == 2:
@@ -211,4 +208,4 @@ def approve(request, id_):
     application = Application.objects.get(id=id_)
     application.status = 3
     application.save()
-    return redirect('/')
+    return redirect('/request/'+str(id_))

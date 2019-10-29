@@ -1,4 +1,4 @@
-{% extends "static/static_files/html/ase_wrap.html" %}
+{% extends "static/static_files/html/none.html" %}
 
 {% load staticfiles %}
 {% block header %}
@@ -7,22 +7,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript">
   function map_init(map) {
-    var pointList =[];
+    var pointList = [];
     {% for coord in coord_list %}
-      pointList.push(new L.LatLng({{coord.0}}, {{coord.1}}));
+      pointList.push(new L.LatLng({{ coord.0}}, {{ coord.1 }}));
     {% endfor %}
-    // var pointA = new L.LatLng(51.673860, 35.605450);
-    // var pointB = new L.LatLng(51.662703, 35.507791)
-    // var pointList = [pointA, pointB];
-    var polyline = new L.polyline(pointList, {
-      color: "blue",
-      weight: 3,
-      opacity: 0.5,
-      smoothFactor: 1
-    });
-    map.setView(pointList[0], 12);
-    polyline.addTo(map)
-  
+  // var pointA = new L.LatLng(51.673860, 35.605450);
+  // var pointB = new L.LatLng(51.662703, 35.507791)
+  // var pointList = [pointA, pointB];
+  var polyline = new L.polyline(pointList, {
+    color: "blue",
+    weight: 3,
+    opacity: 0.5,
+    smoothFactor: 1
+  });
+  map.setView(pointList[0], 12);
+  polyline.addTo(map)
+
     // L.marker([lon, lat]).addTo(map);
   }
   $(document).ready(function () {
@@ -72,7 +72,7 @@
 <body>
   <table class="container">
     <tr>
-      <td class="left">
+      <td class="left" style="width: 30%;">
         <table>
           {% for line in application %}
           <tr>
@@ -82,7 +82,7 @@
           {% endfor %}
         </table>
       </td>
-      <td class="right">
+      <td class="right" style="width: 69%;">
         {% if app.status == 3 %}
         <h2 class="text-info">Запрос {{app.id}}</h2>
         <p>{{sendrequest.delivery|safe|linebreaks}}</p>
@@ -94,8 +94,10 @@
     </tr>
   </table>
   {% if not user.level == 1 %}
+  {% if not app.status == 3 %}
   <a href="approve/" class="btnyes left">Подтвердить запрос</a>
   <a href="disapprove/" class="btnno left">Отклонить запрос</a>
+  {% endif %}
   {% endif %}
   <a href="print" class="btnreg left">Сохранить WORD</a>
 </body>

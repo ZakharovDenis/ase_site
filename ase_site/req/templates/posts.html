@@ -5,78 +5,47 @@
 <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript">
-  function map_init(map, lon, lat) {
-    // get point lat and lon
-    // var lon = {{ y }};
-    // var lat = {{ x }};
-    var lon = 55.809120;
-    var lat = 37.581740;
-    // zoom to point & add it to map
-    map.setView([lat, lon], 12);
-    // map.setView([lat, lon], 12);
-    L.marker([lat, lon]).addTo(map);
-  }
   $(document).ready(function () {
-    $(".request____delete_me____").click(function (e) {
-      var mapdiv = $('td.right')
-      if (mapdiv.is(':visible')) {
-        mapdiv.hide();
-      } else {
-        mapdiv.show();
-      }
-      // var kkk = "{\n \"id_gps\": "+$(this).attr("id");
-      // alert(kkk);
-      $.ajax({
-        type: 'POST',
-        url: '/geo/get',
-        contentType: "application/json;",
-        dataType: "json",
-        // data: {
-        data: "{\n \"id_gps\": " + $(this).attr("id") + '}',
-        // csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-        // },
-        success: function (json) {
-          map_init(map = mapdiv.find($('main')), lat = json[0].fields.latitude, lon = json[0].fields.longitude)
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-
+    $(".request").click(function () {
+      var id = $(this).attr('id');
+      var iframeid = $("iframe").attr("id");
+      $("iframe").remove();
+      $(".request").each(function (e) {
+        if (!(id == iframeid)) {
+          $(this).removeClass("clicked")
         }
-      })
+      });
+      if ($(this).hasClass('clicked')) {
+        $(this).removeClass("clicked")
+      } else {
+        $(this).addClass("clicked")
+      }
+      if (!(id == iframeid)) {
+        $(".container").find(".right").append($('<iframe />', { src: "/request/" + id, class: "wh100", id: id }));
+      }
     })
-  });
+  })
 </script>
-<style>
-  .leaflet-container {
-    /* all maps */
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    /* display: none; */
-  }
-</style>
 {% endblock %}
 {% block content %}
-{% load leaflet_tags %}
-{% leaflet_css %}
-{% leaflet_js %}
 
 <body>
   <table class=container>
     <tr>
-      <td class=left>
+      <td class=left style="width: 25%;">
         {% if object_list|length %}
         <table>
           <tr>
             <!-- <th>ID</th> -->
-            <th>Тип</th>
+            <th>№ запроса</th>
             <th>Наименование</th>
             <th>Дата подачи</th>
             <th>Статус</th>
           </tr>
           {% endif %}
           {%for post in object_list%}
-          <tr class='request' id="{{forloop.counter}}" style="cursor: pointer">
-            <td><a href="/request/{{post.id}}">{{post.id}}</a></td>
+          <tr class='request' id="{{post.id}}" style="cursor: pointer">
+            <td>{{post.id}}</td>
             <td>{{post.get_application_type_display}}</td>
             <td>{{post.delivery_date|date:"d-m-Y"}}</td>
             <td>{{post.status}}</td>
@@ -86,16 +55,8 @@
           {%endfor%}
         </table>
       </td>
-      <!-- <td class=right>
-        <h2 class="text-info">Запрос {{post.id}}</h2>
-        <h2 class="text-info">Информация о запросе</h2>
-        <p>{{sendrequest.delivery|safe|linebreaks}}</p>
-        <a href="/request/{{post.id}}/approve/" class="btnyes">Подтвердить запрос</a>
-        <a href="/request/{{post.id}}/disapprove/" class="btnno">Отклонить запрос</a>
-        <div class=".leaflet-container">
-          {% leaflet_map "main" %}
-        </div>
-      </td> -->
+      <td class=right style="width: 74%;">
+      </td>
     </tr>
   </table>
 </body>

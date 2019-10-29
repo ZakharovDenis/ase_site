@@ -11,7 +11,6 @@ def fill_word(data):
                     for i in range(len(data)):
                         comp='var'+str(i+1)
                         if comp in tmp.lower():
-                            print('True')
                             tmp=tmp.replace(comp,data[i])
                             paragraph.text=tmp
     return doc

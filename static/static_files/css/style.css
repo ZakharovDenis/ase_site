@@ -95,19 +95,30 @@ table.container {
 .container .left {
   display: inline-block;
   vertical-align: bottom;
-  width: 33%;
-  max-height: 90vh;
+  height: 75vh;
   overflow-y: auto;
 }
 .container .right {
   display: inline-block;
   vertical-align: bottom;
-  max-height: 90vh;
-  width: 66%;
+  height: 75vh;
 }
 
 .noHover{
   pointer-events: none;
+}
+
+iframe{
+  border: 0;
+}
+
+.wh100{
+  width: 100%;
+  height: 100%;
+}
+
+tr.clicked{
+  background-color: rgba(0, 100, 172, 0.384);
 }
 
 @media screen and (max-width: 35em) {

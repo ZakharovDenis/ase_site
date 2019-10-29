@@ -83,5 +83,4 @@ def index(request):
                 file.close()
         except:
             return HttpResponse('no file(thats fine, just send POST)')
-        print(outline[0], outline[1])
         return render(request,'ase_site/geo/templates/map.html',{'x':outline[0],'y':outline[1]})
