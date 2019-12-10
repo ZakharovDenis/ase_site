@@ -1,63 +1,72 @@
-{% extends "static/static_files/html/ase_wrap.html" %}
-{% load staticfiles %}
+{% extends "static/html/ase_wrap.html" %}
+{% load static %}
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/buttons.css'%}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/requests_table.css'%}" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script type="text/javascript">
-  $(document).ready(function () {
-    $(".request").click(function () {
-      var id = $(this).attr('id');
-      var iframeid = $("iframe").attr("id");
-      $("iframe").remove();
-      $(".request").each(function (e) {
-        if (!(id == iframeid)) {
-          $(this).removeClass("clicked")
-        }
+<script type=text/javascript> 
+function set_class () {
+  var current_cort = document.querySelector('#{{sort_field}}');
+  if ("{{sort_field_type}}" == "asc") {
+    current_cort.append("↑");
+  } else if ("{{sort_field_type}}" == "desc") {
+    current_cort.append("↓");
+  }
+  } 
+</script> 
+<script type='text/javascript'>
+    $(document).ready(function () {
+      $(".request").click(function () {
+        var id = $(this).attr('id');
+        window.location.replace('/request/' + id)
       });
-      if ($(this).hasClass('clicked')) {
-        $(this).removeClass("clicked")
-      } else {
-        $(this).addClass("clicked")
-      }
-      if (!(id == iframeid)) {
-        $(".container").find(".right").append($('<iframe />', { src: "/request/" + id, class: "wh100", id: id }));
-      }
-    })
-  })
-</script>
+    });
+  </script>
 {% endblock %}
 {% block content %}
 
-<body>
-  <table class=container>
+<body onload="set_class()">
+  {% if object_list|length %}
+  <div>
+    <a href="/request/all/map" class="btnmain">Открыть карту</a>
+    <form method="POST">
+        {% csrf_token %}
+      <input type="date" name='from'> -
+      <input type="date" name='till'>
+      <input type="submit" value="Применить фильтры" class="btnsec">
+    </form>
+  </div>
+  <table>
     <tr>
-      <td class=left style="width: 25%;">
-        {% if object_list|length %}
-        <table>
-          <tr>
-            <!-- <th>ID</th> -->
-            <th>№ запроса</th>
-            <th>Наименование</th>
-            <th>Дата подачи</th>
-            <th>Статус</th>
-          </tr>
-          {% endif %}
-          {%for post in object_list%}
-          <tr class='request' id="{{post.id}}" style="cursor: pointer">
-            <td>{{post.id}}</td>
-            <td>{{post.get_application_type_display}}</td>
-            <td>{{post.delivery_date|date:"d-m-Y"}}</td>
-            <td>{{post.status}}</td>
-          </tr>
-          {% empty %}
-          Нет созданных отчетов.
-          {%endfor%}
-        </table>
-      </td>
-      <td class=right style="width: 74%;">
-      </td>
+      <th><a href="/request/all/{{sort_option.0}}/{{sort_type.0}}" id='{{sort_option.0}}'>Рег. номер</a></th>
+      <th><a href="/request/all/{{sort_option.1}}/{{sort_type.1}}" id='{{sort_option.1}}'>Тип</a></th>
+      <th><a href="/request/all/{{sort_option.2}}/{{sort_type.2}}" id='{{sort_option.2}}'>Дата отправки</a></th>
+      <th><a href="/request/all/{{sort_option.3}}/{{sort_type.3}}" id='{{sort_option.3}}'>Время отправки</a></th>
+      <th><a href="/request/all/{{sort_option.4}}/{{sort_type.4}}" id='{{sort_option.4}}'>Место поставки</a></th>
+      <th><a href="/request/all/{{sort_option.5}}/{{sort_type.5}}" id='{{sort_option.5}}'>Орг. Заявитель</a></th>
+      <th><a href="/request/all/{{sort_option.6}}/{{sort_type.6}}" id='{{sort_option.6}}'>Статус заявки</a></th>
+      <th><a href="/request/all/{{sort_option.7}}/{{sort_type.7}}" id='{{sort_option.7}}'>Дата прибытия</a></th>
+      <th><a href="/request/all/{{sort_option.8}}/{{sort_type.8}}" id='{{sort_option.8}}'>Время прибытия</a></th>
+      <th><a href="/request/all/{{sort_option.9}}/{{sort_type.9}}" id='{{sort_option.9}}'>Ответственный</a></th>
     </tr>
+    {% endif %}
+    {%for post in object_list%}
+    <tr class='request' id="{{post.id}}" style="cursor: pointer">
+      <td>{{post.id}}</td>
+      <td>{{post.get_application_type_display}}</td>
+      <td>{{post.delivery_date|date:"d-m-Y"}}</td>
+      <td>{{post.delivery_time}}</td>
+      <td>{{post.delivery_place}}</td>
+      <td>{{post.performing_org}}</td>
+      <td id='status' status="{{post.status}}">{{post.get_status_display}}</td>
+      <td>{{post.compile_date|date:"d-m-Y"}}</td>
+      <td>{{post.compile_time|date:"H:i"}}</td>
+      <td>{{post.application_sender}}</td>
+    </tr>
+    {% empty %}
+    Нет созданных отчетов.
+    {%endfor%}
   </table>
 </body>
 {% endblock %}

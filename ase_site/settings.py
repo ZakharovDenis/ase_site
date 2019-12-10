@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'ase_site.geo',
     'ase_site.auth_core',
     'leaflet',
+    'phonenumber_field',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

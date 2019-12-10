@@ -19,7 +19,7 @@ class UserAdmin(BaseUserAdmin):
     fieldsets=(
         (None,{'fields':('email','password')}),
         ('Линая информация', {'fields': ('first_name', 'last_name', 'fathers_name')}),
-        ('Рабочая информация', {'fields': ('firm_name', 'level',)}),
+        ('Рабочая информация', {'fields': ('firm_name', 'level', 'phone',)}),
         ('Активация', {'fields':('is_active',)})
     )
     add_fieldsets=(

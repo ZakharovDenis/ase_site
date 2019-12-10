@@ -1,19 +1,20 @@
-{% extends "static/static_files/html/none.html" %}
+{% extends "static/html/ase_wrap.html" %}
 
-{% load staticfiles %}
+{% load static %}
 {% block header %}
 <link rel="stylesheet" href="{% static 'css/buttons.css'%}" type="text/css">
 <link rel="stylesheet" href="{% static 'css/form-style.css'%}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/modal.css' %}" type="text/css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script type="text/javascript">
+  function check_comment() {
+    $("#disapprove_comment").addClass("red_background")
+  };
   function map_init(map) {
     var pointList = [];
     {% for coord in coord_list %}
-      pointList.push(new L.LatLng({{ coord.0}}, {{ coord.1 }}));
-    {% endfor %}
-  // var pointA = new L.LatLng(51.673860, 35.605450);
-  // var pointB = new L.LatLng(51.662703, 35.507791)
-  // var pointList = [pointA, pointB];
+    pointList.push(new L.LatLng({{ coord.0}}, {{ coord.1 }}));
+  {% endfor %}
   var polyline = new L.polyline(pointList, {
     color: "blue",
     weight: 3,
@@ -22,8 +23,6 @@
   });
   map.setView(pointList[0], 12);
   polyline.addTo(map)
-
-    // L.marker([lon, lat]).addTo(map);
   }
   $(document).ready(function () {
     $(".request____delete_me____").click(function (e) {
@@ -33,17 +32,12 @@
       } else {
         mapdiv.show();
       }
-      // var kkk = "{\n \"id_gps\": "+$(this).attr("id");
-      // alert(kkk);
       $.ajax({
         type: 'POST',
         url: '/geo/get',
         contentType: "application/json;",
         dataType: "json",
-        // data: {
         data: "{\n \"id_gps\": " + $(this).attr("id") + '}',
-        // csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-        // },
         success: function (json) {
           map_init(map = mapdiv.find($('main')), lat = json[0].fields.latitude, lon = json[0].fields.longitude)
         },
@@ -58,7 +52,7 @@
   .leaflet-container {
     /* all maps */
     width: 100%;
-    height: 100%;
+    height: 80vh;
     z-index: 0;
     /* display: none; */
   }
@@ -69,36 +63,90 @@
 {% leaflet_css %}
 {% leaflet_js %}
 
-<body>
+<body onload="check_comment()">
   <table class="container">
     <tr>
-      <td class="left" style="width: 30%;">
+      <td style="width: 30%;">
         <table>
           {% for line in application %}
-          <tr>
+          <tr id="{{line.2}}">
             <th>{{line.0}}</th>
             <td>{{line.1}}</td>
           </tr>
           {% endfor %}
         </table>
       </td>
-      <td class="right" style="width: 69%;">
-        {% if app.status == 3 %}
-        <h2 class="text-info">Запрос {{app.id}}</h2>
-        <p>{{sendrequest.delivery|safe|linebreaks}}</p>
-        <div class=".leaflet-container">
+      <td>
+        <div class="leaflet-container">
           {% leaflet_map "main" callback="map_init" %}
         </div>
-        {% endif %}
+
       </td>
     </tr>
   </table>
-  {% if not user.level == 1 %}
-  {% if not app.status == 3 %}
-  <a href="approve/" class="btnyes left">Подтвердить запрос</a>
-  <a href="disapprove/" class="btnno left">Отклонить запрос</a>
+  {% if modal == True %}
+  <div id="CarModal" class="modal" style="display: block;">
+      <div class="modal-content">
+        <span class="close" id="no_cars_modal">&times;</span>
+        <p>Доступных машин сейчас нет</p>
+      </div>
+    </div>
   {% endif %}
+  <div id="Modal" class="modal">
+    <div class="modal-content">
+      <span id='disapprove_modal' class="close">&times;</span>
+      <p>Укажите причину, по которой вы отклоняете запрос.</p>
+      <form method="POST">
+        {% csrf_token %}
+        <textarea rows="10" cols="50" name="comment"></textarea>
+        <input type="submit" class="btnno" style="display: block;" value="Отклонить запрос">
+      </form>
+    </div>
+  </div>
+  {% if 'approve' in buttons %}
+  <a href="/request/{{app.id}}/approve" class="btnyes left">Подтвердить запрос</a>
+  {% endif %}
+  {% if 'disapprove' in buttons %}
+  <div class="btnno left" id='disapprove'>Отклонить запрос</div>
+  {% endif %}
+  {% if 'complete' in buttons %}
+  <a href="/request/{{app.id}}/approve" class="btnyes left">Запрос выполнен корректно</a>
+  {% endif %}
+  {% if 'mistake' in buttons %}
+  <div class="btnno left" id='disapprove'>Запрос выполнен некорректно</div>
+  {% endif %}
+  {% if 'take_to_work' in buttons %}
+  <a href="/request/{{app.id}}/approve" class="btnyes left">Взять в работу</a>
   {% endif %}
   <a href="print" class="btnreg left">Сохранить WORD</a>
+  <script>
+    var modal = document.getElementById("Modal");
+    var btn = document.getElementById("disapprove");
+    var span = document.getElementById("disapprove_modal")[0];
+    btn.onclick = function () {
+      modal.style.display = "block";
+    }
+    span.onclick = function () {
+      alert("do");
+      modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+  <script>
+      var modal = document.getElementById("CarModal");
+      var span = document.getElementById("no_cars_modal");
+      span.onclick = function () {
+        modal.style.display = "none";
+      }
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+  </script>
 </body>
 {% endblock %}

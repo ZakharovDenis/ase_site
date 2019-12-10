@@ -11,6 +11,7 @@ python-docx = "==0.8.10"
 Django = "==2.1.7"
 python-dotenv = "*"
 psycopg2 = "*"
+django-phone-field = "*"
 
 [requires]
 python_version = "3.7"

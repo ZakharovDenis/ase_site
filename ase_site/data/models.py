@@ -1,6 +1,6 @@
 from django.db import models
 
-from .choises import STATUS, TYPE
+from .choises import STATUS, TYPE, DELIVERY
 
 
 class Company(models.Model):
@@ -27,14 +27,13 @@ class GPS(models.Model):
         return str(self.id)
 
 
-class Car(models.Model):
+class CarType(models.Model):
     id = models.AutoField('ИД Машины', primary_key=True, editable=False)
-    car_type = models.CharField('Тип Машиы', max_length=120)
-    gps = models.ForeignKey(GPS, on_delete=models.DO_NOTHING, verbose_name='ИД Датчика')
+    car_type = models.CharField('Тип Машины', max_length=120)
 
     class Meta:
-        verbose_name = 'Машина'
-        verbose_name_plural = 'Машины'
+        verbose_name = 'Тип Машины'
+        verbose_name_plural = 'Типы Машин'
 
     def __str__(self):
         return str(self.car_type)
@@ -43,13 +42,25 @@ class Car(models.Model):
 class Application(models.Model):
     from ase_site.auth_core.models import User
 
-    status = models.IntegerField('На Какой Стадии Находится Заявка', choices=STATUS)
     application_type = models.IntegerField('Тип Заявки', choices=TYPE)
+    status = models.IntegerField("Стадия заявки", choices=STATUS)
+    
     density = models.FloatField('Плотность материала')
+    delivery_place = models.CharField('Место выгрузки материала', max_length=120, default='')
     delivery_date = models.DateField('Дата Поставки')
     delivery_time = models.TimeField('Время Поставки')
-    volume = models.FloatField('Объем')
-    car = models.ForeignKey(Car, on_delete=models.DO_NOTHING, verbose_name='Машина')
+    volume = models.FloatField('Объем(м^3)')
+
+    project_number = models.CharField('Номер объекта', max_length=120, null=True, blank=True)
+    material_class = models.CharField('Класс(марка)', max_length=20, null=True, blank=True)
+    antifreeze = models.CharField('Противоморозная добавка', max_length=30, null=True, blank=True)
+    water_resist = models.IntegerField('Водонепроницаемость', null=True, blank=True)
+    freeze_resist = models.IntegerField('Морозостойкость', null=True, blank=True)
+    ok = models.CharField('О-К', max_length=20, null=True, blank=True)
+    lay_type = models.CharField('Способ укладки', max_length=20, null=True, blank=True)
+    delivery_type = models.IntegerField('Доставка', choices=DELIVERY, null=True, blank=True)
+
+    car = models.ForeignKey(CarType, on_delete=models.DO_NOTHING, verbose_name='Машина', related_name="carcar")
     manufacturer_org = models.ForeignKey(
         Company, on_delete=models.DO_NOTHING, verbose_name='Организация Изготовитель', related_name='manufacturer_org'
     )
@@ -60,19 +71,37 @@ class Application(models.Model):
         User, on_delete=models.DO_NOTHING, verbose_name='Заявитель', related_name='application_sender'
     )
     application_receiver = models.ForeignKey(
-        User, on_delete=models.DO_NOTHING, verbose_name='Заявку Принял', related_name='application_receiver'
+        User, on_delete=models.DO_NOTHING, verbose_name='Заявку Принял', related_name='application_receiver', null=True, blank=True
     )
-    ocr_specialist = models.CharField('Специалист ОСР', max_length=120)
+    ocr_specialist = models.CharField('Специалист ОСР', max_length=120, default='')
+
+    disapprove_comment = models.TextField("Комментарий", null=True, blank=True)
+
+    compile_date = models.DateField("Дата прибытия", null=True, blank=True)
+    compile_time = models.TimeField("Время прибытия", null=True, blank=True)
 
     class Meta:
         verbose_name = 'Заявка'
         verbose_name_plural = 'Заявки'
 
 
+class Car(models.Model):
+    car_number = models.CharField("Номер машины", primary_key=True, editable=True, max_length=15)
+    car_type = models.ForeignKey(CarType, on_delete=models.DO_NOTHING, verbose_name="Тип машины")
+    gps = models.ForeignKey(GPS, on_delete=models.DO_NOTHING, verbose_name='ИД Датчика')
+    connected_application = models.ForeignKey(Application, on_delete=models.SET_NULL, null=True, related_name='connected_application', blank=True)
+
+    class Meta:
+        verbose_name = 'Машина'
+        verbose_name_plural = 'Машины'
+
+    def __str__(self):
+        return str(self.car_type)
+ 
+
 class GPSdata(models.Model):
     id = models.AutoField(primary_key=True, editable=False)
     id_gps = models.ForeignKey(GPS, on_delete=models.DO_NOTHING)
-    # application = models.ForeignKey(Application, on_delete=models.DO_NOTHING, verbose_name="Выполняемая заявка")
     date = models.DateTimeField('Дата/время', editable=True, auto_now_add=True)
     latitude = models.CharField('Широта', editable=True, blank=False, max_length=50)
     longitude = models.CharField('Долгота', editable=True, blank=False, max_length=50)

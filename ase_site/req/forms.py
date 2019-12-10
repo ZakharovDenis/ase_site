@@ -3,23 +3,41 @@ from ase_site.data.models import Application
 from .widget import SelectTimeWidget
 
 
-class MakeRequestForm(forms.ModelForm):
-    # delivery_date = forms.DateField(label='Дата Поставки', widget=forms.SelectDateWidget())
-    # delivery_time = forms.TimeField(
-    #     label='Время Поставки', widget=SelectTimeWidget(
-    #         twelve_hr=False,
-    #         minute_step=5,
-    #         use_seconds=False)
-    # )
-    # application_receiver = forms.ModelChoiceField(queryset=Usr)
-
+class beton_form(forms.ModelForm):
     class Meta():
         model = Application
         exclude = (
             'application_type',
             'status',
             'application_sender',
-            # 'application_receiver',
+            'application_receiver',
             'delivery_date',
-            'delivery_time'
+            'delivery_time',
+            'disapprove_comment',
+            'compile_date',
+            'compile_time',
+        )
+
+
+class sand_pgs_form(forms.ModelForm):
+    class Meta:
+        model = Application
+        exclude = (
+            'application_type',
+            'status',
+            'application_sender',
+            'application_receiver',
+            'delivery_date',
+            'delivery_time',
+            'project_number',
+            'material_class',
+            'antifreeze',
+            'water_resist',
+            'freeze_resist',
+            'ok',
+            'lay_type',
+            'delivery_type',
+            'disapprove_comment',
+            'compile_date',
+            'compile_time',
         )

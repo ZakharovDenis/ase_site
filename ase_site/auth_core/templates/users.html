@@ -1,0 +1,40 @@
+{% extends "static/html/ase_wrap.html" %}
+{% load static %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/buttons.css'%}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css">
+<link rel="stylesheet" href="{% static 'css/requests_table.css'%}" type="text/css">
+{% endblock %}
+{% block content %}
+
+<body>
+  <table style="border: none;">
+    <tr>
+      <td>
+        {% if object_list|length %}
+        <table>
+          <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Телефон</th>
+            <th>Почта</th>
+            <th>Должность</th>
+          </tr>
+          {% endif %}
+          {%for user in object_list%}
+          <tr class='users' style="cursor: pointer">
+            <td>{{user.last_name}}</td>
+            <td>{{user.first_name}}</td>
+            <td>{{user.fathers_name}}</td>
+            <td>{{user.phone}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.get_level_display}}</td>
+          </tr>
+          {%endfor%}
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+{% endblock %}
