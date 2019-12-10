@@ -6,12 +6,11 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-django-leaflet = "==0.24.0"
-python-docx = "==0.8.10"
-Django = "==2.1.7"
-python-dotenv = "*"
-psycopg2 = "*"
-django-phone-field = "*"
+django = "*"
+django-leaflet = "*"
+python-docx = "*"
+django-phonenumber-field = "*"
+phonenumbers = "*"
 
 [requires]
 python_version = "3.7"
