@@ -27,28 +27,58 @@ function set_class () {
 {% block content %}
 
 <body onload="set_class()">
-  {% if object_list|length %}
   <div>
-    <a href="/request/all/map" class="btnmain">Открыть карту</a>
-    <form method="POST">
-        {% csrf_token %}
-      <input type="date" name='from'> -
-      <input type="date" name='till'>
-      <input type="submit" value="Применить фильтры" class="btnsec">
-    </form>
-  </div>
+      <a href="/request/map/map" class="btnmain">Открыть карту</a>
+      <form method="POST">
+          {% csrf_token %}
+          <table style="border: none; display: inline;">
+            <tr>
+              <th>Тип материала</th>
+              <th>Статус заявки</th>
+              <th>От</th>
+              <th>До</th>
+            </tr>
+            <tr>
+              <th>
+                <select name = "material_filter">
+                  <option value = all selected>Все заявки</option>
+                  {% for material in material_list %}
+                  <option value="{{material.0}}">{{material.1}}</option>
+                  {% endfor %}
+                </select>
+              </th>
+              <th>
+                <select name = "status_filter">
+                  <option value = all selected>Все заявки</option>
+                  {% for status in status_list %}
+                  <option value="{{status.0}}">{{status.1}}</option>
+                  {% endfor %}
+                </select>
+              </th>
+              <th>
+                <input type="date" name='from'>
+              </th>
+              <th>
+                <input type="date" name='till'>
+              </th>
+            </tr>
+          </table>
+        <input type="submit" value="Применить фильтры" class="btnsec">
+      </form>
+    </div>
+  {% if object_list|length %}
   <table>
     <tr>
-      <th><a href="/request/all/{{sort_option.0}}/{{sort_type.0}}" id='{{sort_option.0}}'>Рег. номер</a></th>
-      <th><a href="/request/all/{{sort_option.1}}/{{sort_type.1}}" id='{{sort_option.1}}'>Тип</a></th>
-      <th><a href="/request/all/{{sort_option.2}}/{{sort_type.2}}" id='{{sort_option.2}}'>Дата отправки</a></th>
-      <th><a href="/request/all/{{sort_option.3}}/{{sort_type.3}}" id='{{sort_option.3}}'>Время отправки</a></th>
-      <th><a href="/request/all/{{sort_option.4}}/{{sort_type.4}}" id='{{sort_option.4}}'>Место поставки</a></th>
-      <th><a href="/request/all/{{sort_option.5}}/{{sort_type.5}}" id='{{sort_option.5}}'>Орг. Заявитель</a></th>
-      <th><a href="/request/all/{{sort_option.6}}/{{sort_type.6}}" id='{{sort_option.6}}'>Статус заявки</a></th>
-      <th><a href="/request/all/{{sort_option.7}}/{{sort_type.7}}" id='{{sort_option.7}}'>Дата прибытия</a></th>
-      <th><a href="/request/all/{{sort_option.8}}/{{sort_type.8}}" id='{{sort_option.8}}'>Время прибытия</a></th>
-      <th><a href="/request/all/{{sort_option.9}}/{{sort_type.9}}" id='{{sort_option.9}}'>Ответственный</a></th>
+      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.0}}/{{sort_type.0}}" id='{{sort_option.0}}'>Рег. номер</a></th>
+      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.1}}/{{sort_type.1}}" id='{{sort_option.1}}'>Тип</a></th>
+      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.2}}/{{sort_type.2}}" id='{{sort_option.2}}'>Дата отправки</a></th>
+      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.3}}/{{sort_type.3}}" id='{{sort_option.3}}'>Время отправки</a></th>
+      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.4}}/{{sort_type.4}}" id='{{sort_option.4}}'>Место поставки</a></th>
+      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.5}}/{{sort_type.5}}" id='{{sort_option.5}}'>Орг. Заявитель</a></th>
+      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.6}}/{{sort_type.6}}" id='{{sort_option.6}}'>Статус заявки</a></th>
+      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.7}}/{{sort_type.7}}" id='{{sort_option.7}}'>Дата прибытия</a></th>
+      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.8}}/{{sort_type.8}}" id='{{sort_option.8}}'>Время прибытия</a></th>
+      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.9}}/{{sort_type.9}}" id='{{sort_option.9}}'>Ответственный</a></th>
     </tr>
     {% endif %}
     {%for post in object_list%}

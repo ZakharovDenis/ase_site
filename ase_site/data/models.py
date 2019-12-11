@@ -4,8 +4,7 @@ from .choises import STATUS, TYPE, DELIVERY
 
 
 class Company(models.Model):
-    id = models.AutoField('ИД организации', primary_key=True, editable=False)
-    name = models.CharField('Название организации', max_length=100)
+    name = models.CharField('Название организации',primary_key=True, max_length=100)
 
     class Meta:
         verbose_name = 'Организация'

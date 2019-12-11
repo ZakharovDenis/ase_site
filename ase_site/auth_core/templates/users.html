@@ -19,16 +19,18 @@
             <th>Отчество</th>
             <th>Телефон</th>
             <th>Почта</th>
+            <th>Компания</th>
             <th>Должность</th>
           </tr>
           {% endif %}
           {%for user in object_list%}
-          <tr class='users' style="cursor: pointer">
+          <tr class='users'>
             <td>{{user.last_name}}</td>
             <td>{{user.first_name}}</td>
             <td>{{user.fathers_name}}</td>
             <td>{{user.phone}}</td>
             <td>{{user.email}}</td>
+            <td>{{user.firm_name}}</td>
             <td>{{user.get_level_display}}</td>
           </tr>
           {%endfor%}

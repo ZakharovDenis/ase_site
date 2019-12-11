@@ -50,12 +50,10 @@
 </script>
 <style>
   .leaflet-container {
-    /* all maps */
     width: 100%;
     height: 80vh;
     z-index: 0;
-    /* display: none; */
-  }
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -86,13 +84,13 @@
   </table>
   {% if modal == True %}
   <div id="CarModal" class="modal" style="display: block;">
-      <div class="modal-content">
-        <span class="close" id="no_cars_modal">&times;</span>
-        <p>Доступных машин сейчас нет</p>
-      </div>
+    <div class="modal-content">
+      <span class="close" id="no_cars_modal">&times;</span>
+      <p>Доступных машин сейчас нет</p>
     </div>
+  </div>
   {% endif %}
-  <div id="Modal" class="modal">
+  <div id="DisModal" class="modal">
     <div class="modal-content">
       <span id='disapprove_modal' class="close">&times;</span>
       <p>Укажите причину, по которой вы отклоняете запрос.</p>
@@ -120,14 +118,14 @@
   {% endif %}
   <a href="print" class="btnreg left">Сохранить WORD</a>
   <script>
-    var modal = document.getElementById("Modal");
     var btn = document.getElementById("disapprove");
-    var span = document.getElementById("disapprove_modal")[0];
+    var span = document.getElementById("disapprove_modal");
+    var modal = document.getElementById("DisModal");
     btn.onclick = function () {
+      modal = document.getElementById("DisModal");
       modal.style.display = "block";
     }
     span.onclick = function () {
-      alert("do");
       modal.style.display = "none";
     }
     window.onclick = function (event) {
@@ -137,16 +135,16 @@
     }
   </script>
   <script>
-      var modal = document.getElementById("CarModal");
-      var span = document.getElementById("no_cars_modal");
-      span.onclick = function () {
+    var modal = document.getElementById("CarModal");
+    var span = document.getElementById("no_cars_modal");
+    span.onclick = function () {
+      modal.style.display = "none";
+    }
+    window.onclick = function (event) {
+      if (event.target == modal) {
         modal.style.display = "none";
       }
-      window.onclick = function (event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
-        }
-      }
+    }
   </script>
 </body>
 {% endblock %}

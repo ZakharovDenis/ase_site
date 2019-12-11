@@ -39,7 +39,7 @@ class User(AbstractBaseUser):
     date_joined = models.DateTimeField(('Дата регистрации'), auto_now_add=True)
     is_active = models.BooleanField(('Активирован'), default=False)
     firm_name = models.ForeignKey(
-        Company, on_delete=models.DO_NOTHING, verbose_name='Название', related_name='firm_name', null=True
+        Company, on_delete=models.DO_NOTHING, verbose_name='Организация', related_name='firm_name', null=True
     )
     level = models.IntegerField(('Статус сотрудника'), choices=STATUS_CHOICES, blank=True, null=True)
     is_staff = models.BooleanField(('Стаф'), default=False)

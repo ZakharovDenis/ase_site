@@ -22,6 +22,7 @@ from email.mime.base import MIMEBase
 
 from ase_site.auth_core.models import User
 from ase_site.data.models import Application, GPSdata, Car
+from ase_site.data.choises import STATUS, TYPE
 from .forms import beton_form, sand_pgs_form
 
 
@@ -241,8 +242,10 @@ def show_application(request, id_, modal=False):
          'modal': modal})
 
 
-def show_all_applications(request, sort_field="id", sort_type="asc", mp=None):
-    filter_list = ['id', 'application_type', 'delivery_date', 'delivery_time', 'delivery_place', 'performing_org', 'status', 'compile_date', 'compile_time', 'application_sender']
+def show_all_applications(request, material_filter='all', status_filter='all', sort_field="id", sort_type="asc", mp=None):
+    if request.method == "POST":
+        return redirect('/request/all/%s/%s'%(request.POST.get('material_filter'), request.POST.get('status_filter')))
+    sort_list = ['id', 'application_type', 'delivery_date', 'delivery_time', 'delivery_place', 'performing_org', 'status', 'compile_date', 'compile_time', 'application_sender']
     user = request.user
     if user.level == 1:
         applications = Application.objects.filter(application_sender=user).order_by(sort_field if sort_type == 'asc' else '-'+sort_field)
@@ -254,6 +257,10 @@ def show_all_applications(request, sort_field="id", sort_type="asc", mp=None):
         applications = Application.objects.filter(status__gte=6).filter(manufacturer_org=user.firm_name).order_by(sort_field if sort_type == 'asc' else '-'+sort_field)
     else:
         applications = Application.objects.all().order_by(sort_field if sort_type == 'asc' else '-'+sort_field)
+    if material_filter != 'all':
+        applications = applications.filter(application_type=material_filter)
+    if status_filter != 'all':
+        applications = applications.filter(status=status_filter)
     if mp:
         list_of_coord_list = []
         for aplic in applications:
@@ -265,10 +272,15 @@ def show_all_applications(request, sort_field="id", sort_type="asc", mp=None):
         'list_of_coord_list': list_of_coord_list})
     return render(request, "ase_site/req/templates/posts.html", 
     {'object_list': applications, 
-    "sort_type": ["asc" if f != sort_field or (f == sort_field and sort_type == 'desc') else "desc" for f in filter_list],
-    "sort_option": filter_list,
+    "sort_type": ["asc" if f != sort_field or (f == sort_field and sort_type == 'desc') else "desc" for f in sort_list],
+    "sort_option": sort_list,
     "sort_field": sort_field,
-    "sort_field_type": sort_type})
+    "sort_field_type": sort_type,
+    "material_filter":material_filter,
+    "status_filter":status_filter,
+    "material_list": TYPE,
+    "status_list": STATUS})
+
 
 
 def approve(request, id_):
