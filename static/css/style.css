@@ -126,6 +126,10 @@ tr.clicked{
   background-color: rgba(0, 100, 172, 0.384);
 }
 
+.right{
+  float: right;
+}
+
 @media screen and (max-width: 51em) {
   .navbar a {
     padding: 0.5em;

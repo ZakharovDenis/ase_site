@@ -72,7 +72,9 @@ class Application(models.Model):
     application_receiver = models.ForeignKey(
         User, on_delete=models.DO_NOTHING, verbose_name='Заявку Принял', related_name='application_receiver', null=True, blank=True
     )
-    ocr_specialist = models.CharField('Специалист ОСР', max_length=120, default='')
+    ocr_specialist = models.ForeignKey(
+        User, on_delete=models.DO_NOTHING, verbose_name='Специалист ОСР', related_name='ocr_specialist', null=True, blank=False
+    )
 
     disapprove_comment = models.TextField("Комментарий", null=True, blank=True)
 

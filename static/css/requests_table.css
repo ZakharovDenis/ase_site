@@ -9,10 +9,12 @@ th {
     background: #ccc; 
     padding: 5px;
     border: 1px solid black;
+    word-break: break-word;
 }
 td { 
-padding: 5px; 
-border: 1px solid black;
+    padding: 5px; 
+    border: 1px solid black;
+    word-break: break-word;
 }
 a{
     text-decoration: none;

@@ -21,5 +21,6 @@ urlpatterns = [
     path('<int:id_>/print/', views.create_word),
     path('<int:id_>/approve/', views.approve),
     path('all/<str:material_filter>/<str:status_filter>/<str:sort_field>/<str:sort_type>', views.show_all_applications),
-    path('map/<str:mp>', views.show_all_applications)
+    path('map/<str:mp>', views.show_all_applications),
+    path('xlsx/<str:material_filter>/<str:status_filter>', views.create_excel)
 ]

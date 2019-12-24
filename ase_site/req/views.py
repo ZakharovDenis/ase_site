@@ -3,6 +3,7 @@ import os
 import random
 import smtplib
 import datetime
+import xlwt
 from io import BytesIO
 from datetime import date
 
@@ -183,14 +184,18 @@ def create_word(request, id_):
     application = Application.objects.get(id=id_)
     fields = application._meta.get_fields()
     data = []
+    osr = None
     doc_type = {1: "beton", 2:"sand", 3:'pgs'}
     for f in fields:
-        if not str(f.name) in ['status', 'application_type', 'id', 'connected_application']:
+        if not str(f.name) in ['status', 'application_type', 'id', 'connected_application', 'disapprove_comment']:
             if getattr(application, f.name) is not None:
+                if f.name == 'ocr_specialist':
+                    osr = str(getattr(application, f.name))
                 data.append(str(getattr(application, f.name)))
             elif f.name == 'application_receiver':
                 data.append("")
-            
+    data.append(osr)
+    data.append(datetime.date.today().strftime('%d/%m/%Y'))
     doc = fill_word(data, doc_type.get(application.application_type))
     data = BytesIO()
     doc.save(data)
@@ -198,6 +203,44 @@ def create_word(request, id_):
                             content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
     response['Content-Disposition'] = 'attachment; filename="reports.docx"'
     return response
+
+def create_excel(request, material_filter, status_filter):
+    applications = prepared_dataset(user=request.user, material_filter=material_filter, status_filter=status_filter)
+    book = xlwt.Workbook(encoding="utf-8")
+    sheet = book.add_sheet("Sheet 1")
+    sheet.write(0, 0, "Рег. номер")
+    sheet.write(0, 1, "Тип")
+    sheet.write(0, 2, "Объем материала")
+    sheet.write(0, 3, "Дата отправки")
+    sheet.write(0, 4, "Время отправки")
+    sheet.write(0, 5, "Место поставки")
+    sheet.write(0, 6, "Орг. Заявитель")
+    sheet.write(0, 7, "Статус заявки")
+    sheet.write(0, 8, "Дата прибытия")
+    sheet.write(0, 9, "Время прибытия")
+    sheet.write(0, 10, "Ответственный")
+    sheet.write(0, 11, "Рабочая документация")
+    for i, post in enumerate(applications):
+        sheet.write(i+1, 0, post.id)
+        sheet.write(i+1, 1, post.get_application_type_display())
+        sheet.write(i+1, 2, post.volume)
+        sheet.write(i+1, 3, str(post.delivery_date))
+        sheet.write(i+1, 4, str(post.delivery_time))
+        sheet.write(i+1, 5, post.delivery_place)
+        sheet.write(i+1, 6, str(post.performing_org))
+        sheet.write(i+1, 7, post.get_status_display())
+        sheet.write(i+1, 8, post.compile_date)
+        sheet.write(i+1, 9, post.compile_time)
+        sheet.write(i+1, 10, str(post.application_sender))
+        sheet.write(i+1, 11, "")
+    data = BytesIO()
+    book.save(data)
+    response = HttpResponse(data.getvalue(),
+                            content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response['Content-Disposition'] = 'attachment; filename="reports.xls"'
+    return response
+
+
 
 
 def create_beton_request(request):
@@ -242,11 +285,7 @@ def show_application(request, id_, modal=False):
          'modal': modal})
 
 
-def show_all_applications(request, material_filter='all', status_filter='all', sort_field="id", sort_type="asc", mp=None):
-    if request.method == "POST":
-        return redirect('/request/all/%s/%s'%(request.POST.get('material_filter'), request.POST.get('status_filter')))
-    sort_list = ['id', 'application_type', 'delivery_date', 'delivery_time', 'delivery_place', 'performing_org', 'status', 'compile_date', 'compile_time', 'application_sender']
-    user = request.user
+def prepared_dataset(user, material_filter='all', status_filter='all', sort_field="id", sort_type="asc"):
     if user.level == 1:
         applications = Application.objects.filter(application_sender=user).order_by(sort_field if sort_type == 'asc' else '-'+sort_field)
     elif user.level == 2:
@@ -261,6 +300,14 @@ def show_all_applications(request, material_filter='all', status_filter='all', s
         applications = applications.filter(application_type=material_filter)
     if status_filter != 'all':
         applications = applications.filter(status=status_filter)
+    return applications
+
+def show_all_applications(request, material_filter='all', status_filter='all', sort_field="id", sort_type="asc", mp=None):
+    if request.method == "POST":
+        return redirect('/request/all/%s/%s'%(request.POST.get('material_filter'), request.POST.get('status_filter')))
+    sort_list = ['id', 'application_type', 'volume', 'delivery_date', 'delivery_time', 'delivery_place', 'performing_org', 'status', 'compile_date', 'compile_time', 'application_sender']
+    user = request.user
+    applications = prepared_dataset(user=user, material_filter=material_filter, status_filter=status_filter, sort_field=sort_field, sort_type=sort_type)
     if mp:
         list_of_coord_list = []
         for aplic in applications:
@@ -280,7 +327,6 @@ def show_all_applications(request, material_filter='all', status_filter='all', s
     "status_filter":status_filter,
     "material_list": TYPE,
     "status_list": STATUS})
-
 
 
 def approve(request, id_):
