@@ -2,24 +2,24 @@
 <!DOCTYPE html>
 <html lang="eng">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewpoint" content="width-device-width, initial-scale=1.0">
-  <meta http-equip ="X-UA-Compatible" content="ie=edge">
-  <title>Стройконтроль АСЭ</title>
-  <link rel = "stylesheet" href="{% static 'css/login_page.css'%}" type="text/css">
-  <link rel = "stylesheet" href="{% static 'css/buttons.css'%}" type="text/css">
+    <meta charset="UTF-8">
+    <meta name="viewpoint" content="width-device-width, initial-scale=1.0">
+    <meta http-equip="X-UA-Compatible" content="ie=edge">
+    <title>Стройконтроль АСЭ</title>
+    <link rel="stylesheet" href="{% static 'css/login_page.css'%}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/buttons.css'%}" type="text/css">
 </head>
 <body style="background-image: url({% static 'media/atom_plant2.jpg' %})">
-  <div class ="login-box" align="center">
+<div class="login-box" align="center">
     <h1>Войти</h1>
     <div>
-      {% block content %}
-      {%for val in values%}
-      <p>{{val}}</p>
-      {%endfor%}
-      {% endblock %}
+        {% block content %}
+        {%for val in values%}
+        <p>{{val}}</p>
+        {%endfor%}
+        {% endblock %}
     </div>
-    </div>
-  </div>
+</div>
+</div>
 </body>
 </html>

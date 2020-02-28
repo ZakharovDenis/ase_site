@@ -2,37 +2,37 @@
 <html lang="eng">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewpoint" content="width-device-width, initial-scale=1.0">
-  <meta http-equip="X-UA-Compatible" content="ie=edge">
-  <title>Стройконтроль АСЭ</title>
-  {% load static %}
-  <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css">
-  {% block header %}
-  {% endblock %}
+    <meta charset="UTF-8">
+    <meta name="viewpoint" content="width-device-width, initial-scale=1.0">
+    <meta http-equip="X-UA-Compatible" content="ie=edge">
+    <title>Стройконтроль АСЭ</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css">
+    {% block header %}
+    {% endblock %}
 </head>
 
 <body style="margin: 0">
-  <div class="navbar">
+<div class="navbar">
     <a href="/request/all">Созданные запросы</a>
     {% if user.level != 4 %}
     <div class="dropdown">
-      <button class="dropbtn">Создать запрос</button>
-      <div class="dropdown-content">
-        <a href="/request/create/concrete" style="background-color: rgb(138, 138, 138);">Бетон</a>
-        <a href="/request/create/sand" style="background-color: #9F572F;">Песок</a>
-        <a href="/request/create/PGS" style="background-color: #F97425;">ПГС</a>
-      </div>
+        <button class="dropbtn">Создать запрос</button>
+        <div class="dropdown-content">
+            <a href="/request/create/concrete" style="background-color: rgb(138, 138, 138);">Бетон</a>
+            <a href="/request/create/sand" style="background-color: #9F572F;">Песок</a>
+            <a href="/request/create/PGS" style="background-color: #F97425;">ПГС</a>
+        </div>
     </div>
     {% endif %}
     <a href="/auth/users">Все пользователи</a>
     <a href="/auth/logout" class="right">Выйти</a>
     <a class="right noHover">{{ user }}</a>
-  </div>
-  <div class="content">
+</div>
+<div class="content">
     {% block content %}
     {% endblock %}
-  </div>
+</div>
 </body>
 
 </html>

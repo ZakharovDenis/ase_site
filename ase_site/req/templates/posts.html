@@ -14,7 +14,8 @@ function set_class () {
     current_cort.append("↓");
   }
   } 
-</script> 
+
+</script>
 <script type='text/javascript'>
     $(document).ready(function () {
       $(".request").click(function () {
@@ -22,86 +23,98 @@ function set_class () {
         window.location.replace('/request/' + id)
       });
     });
-  </script>
+
+</script>
 {% endblock %}
 {% block content %}
 
 <body onload="set_class()">
-  <div>
-      <a href="/request/map/map" class="btnmain">Открыть карту</a>
-      <a href='/request/xlsx/{{material_filter}}/{{status_filter}}' class="btnmain right">Сохранить в EXCEL</a>
-      <form method="POST">
-          {% csrf_token %}
-          <table style="border: none; display: inline;">
+<div>
+    <a href="/request/map/map" class="btnmain">Открыть карту</a>
+    <a href='/request/xlsx/{{material_filter}}/{{status_filter}}' class="btnmain right">Сохранить в EXCEL</a>
+    <form method="POST">
+        {% csrf_token %}
+        <table style="border: none; display: inline;">
             <tr>
-              <th>Тип материала</th>
-              <th>Статус заявки</th>
-              <th>От</th>
-              <th>До</th>
+                <th>Тип материала</th>
+                <th>Статус заявки</th>
+                <th>От</th>
+                <th>До</th>
             </tr>
             <tr>
-              <th>
-                <select name = "material_filter">
-                  <option value = all selected>Все заявки</option>
-                  {% for material in material_list %}
-                  <option value="{{material.0}}">{{material.1}}</option>
-                  {% endfor %}
-                </select>
-              </th>
-              <th>
-                <select name = "status_filter">
-                  <option value = all selected>Все заявки</option>
-                  {% for status in status_list %}
-                  <option value="{{status.0}}">{{status.1}}</option>
-                  {% endfor %}
-                </select>
-              </th>
-              <th>
-                <input type="date" name='from'>
-              </th>
-              <th>
-                <input type="date" name='till'>
-              </th>
+                <th>
+                    <select name="material_filter">
+                        <option value=all selected>Все заявки</option>
+                        {% for material in material_list %}
+                        <option value="{{material.0}}">{{material.1}}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th>
+                    <select name="status_filter">
+                        <option value=all selected>Все заявки</option>
+                        {% for status in status_list %}
+                        <option value="{{status.0}}">{{status.1}}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th>
+                    <input type="date" name='from'>
+                </th>
+                <th>
+                    <input type="date" name='till'>
+                </th>
             </tr>
-          </table>
+        </table>
         <input type="submit" value="Применить фильтры" class="btnsec">
-      </form>
-    </div>
-  {% if object_list|length %}
-  <table>
+    </form>
+</div>
+{% if object_list|length %}
+<table>
     <tr>
-      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.0}}/{{sort_type.0}}" id='{{sort_option.0}}'>Рег. номер</a></th>
-      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.1}}/{{sort_type.1}}" id='{{sort_option.1}}'>Тип</a></th>
-      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.2}}/{{sort_type.2}}" id='{{sort_option.2}}'>Объем материала</a></th>
-      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.3}}/{{sort_type.3}}" id='{{sort_option.3}}'>Дата отправки</a></th>
-      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.4}}/{{sort_type.4}}" id='{{sort_option.4}}'>Время отправки</a></th>
-      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.5}}/{{sort_type.5}}" id='{{sort_option.5}}'>Место поставки</a></th>
-      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.6}}/{{sort_type.6}}" id='{{sort_option.6}}'>Орг. Заявитель</a></th>
-      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.7}}/{{sort_type.7}}" id='{{sort_option.7}}'>Статус заявки</a></th>
-      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.8}}/{{sort_type.8}}" id='{{sort_option.8}}'>Дата прибытия</a></th>
-      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.9}}/{{sort_type.9}}" id='{{sort_option.9}}'>Время прибытия</a></th>
-      <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.10}}/{{sort_type.10}}" id='{{sort_option.10}}'>Ответственный</a></th>
-      <th>Рабочая документация</th>
+        <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.0}}/{{sort_type.0}}"
+               id='{{sort_option.0}}'>Рег. номер</a></th>
+        <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.1}}/{{sort_type.1}}"
+               id='{{sort_option.1}}'>Тип</a></th>
+        <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.2}}/{{sort_type.2}}"
+               id='{{sort_option.2}}'>Объем материала</a></th>
+        <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.3}}/{{sort_type.3}}"
+               id='{{sort_option.3}}'>Дата отправки</a></th>
+        <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.4}}/{{sort_type.4}}"
+               id='{{sort_option.4}}'>Время отправки</a></th>
+        <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.5}}/{{sort_type.5}}"
+               id='{{sort_option.5}}'>Место поставки</a></th>
+        <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.6}}/{{sort_type.6}}"
+               id='{{sort_option.6}}'>Орг. Заявитель</a></th>
+        <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.7}}/{{sort_type.7}}"
+               id='{{sort_option.7}}'>Статус заявки</a></th>
+        <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.8}}/{{sort_type.8}}"
+               id='{{sort_option.8}}'>Дата прибытия</a></th>
+        <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.9}}/{{sort_type.9}}"
+               id='{{sort_option.9}}'>Время прибытия</a></th>
+        <th><a href="/request/all/{{material_filter}}/{{status_filter}}/{{sort_option.10}}/{{sort_type.10}}"
+               id='{{sort_option.10}}'>Ответственный</a></th>
+        <th>Рабочая документация</th>
     </tr>
     {% endif %}
     {%for post in object_list%}
     <tr class='request' id="{{post.id}}" style="cursor: pointer">
-      <td>{{post.id}}</td>
-      <td>{{post.get_application_type_display}}</td>
-      <td>{{post.volume}}</td>
-      <td>{{post.delivery_date|date:"d-m-Y"}}</td>
-      <td>{{post.delivery_time}}</td>
-      <td>{{post.delivery_place}}</td>
-      <td>{{post.performing_org}}</td>
-      <td id='status' status="{{post.status}}">{{post.get_status_display}}</td>
-      <td>{{post.compile_date|date:"d-m-Y"}}</td>
-      <td>{{post.compile_time|date:"H:i"}}</td>
-      <td>{{post.application_sender}}</td>
-      <td></td>
+        <td>{{post.id}}</td>
+        <td>{{post.get_application_type_display}}</td>
+        <td>{{post.volume}}</td>
+        <td>{{post.delivery_date|date:"d-m-Y"}}</td>
+        <td>{{post.delivery_time}}</td>
+        <td>{{post.delivery_place}}</td>
+        <td>{{post.performing_org}}</td>
+        <td id='status' status="{{post.status}}">{{post.get_status_display}}</td>
+        <td>{{post.compile_date|date:"d-m-Y"}}</td>
+        <td>{{post.compile_time|date:"H:i"}}</td>
+        <td>{{post.application_sender}}</td>
+        <td></td>
     </tr>
     {% empty %}
     Нет созданных отчетов.
     {%endfor%}
-  </table>
+</table>
 </body>
 {% endblock %}

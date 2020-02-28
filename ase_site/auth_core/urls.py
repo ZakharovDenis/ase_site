@@ -1,10 +1,10 @@
 from django.conf.urls import url
-from.import views
 from django.views.generic import ListView, DetailView
+
+from . import views
 from .models import User
 
-
-urlpatterns=[
+urlpatterns = [
     url(r'login/', views.login_view, name='login'),
     url(r'logout/', views.logout_view, name="logout"),
     url(r'register/', views.register_view, name="register"),

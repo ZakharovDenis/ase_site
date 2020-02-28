@@ -1,18 +1,19 @@
-from django.db import models
+from ase_site.data.models import Company
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 from .choices import STATUS_CHOICES
-from phonenumber_field.modelfields import PhoneNumberField
-from ase_site.data.models import Company
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, active=False, staff=False, admin=False,first_name=None,last_name=None,fathers_name=None,firm_name=None,level=None):
+    def create_user(self, email, password=None, active=False, staff=False, admin=False, first_name=None, last_name=None,
+                    fathers_name=None, firm_name=None, level=None):
         if not email:
             raise ValueError("Set email")
         if not password:
             raise ValueError("Set pass")
-        user_obj=self.model(email=self.normalize_email(email))
+        user_obj = self.model(email=self.normalize_email(email))
         user_obj.set_password(password)
         user_obj.is_active = active
         user_obj.is_staff = staff
@@ -31,11 +32,11 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    email = models.EmailField(('Электронная почта'),unique=True)
-    first_name = models.CharField(('Имя'),max_length=30, blank=True, null=True)
-    last_name = models.CharField(('Фамилия'),max_length=30, blank=True, null=True)
-    fathers_name = models.CharField(('Отчетсво'),max_length=30, blank=True, null=True)
-    phone  = PhoneNumberField(("Телефон"), blank=True, null=True, max_length=30)
+    email = models.EmailField(('Электронная почта'), unique=True)
+    first_name = models.CharField(('Имя'), max_length=30, blank=True, null=True)
+    last_name = models.CharField(('Фамилия'), max_length=30, blank=True, null=True)
+    fathers_name = models.CharField(('Отчетсво'), max_length=30, blank=True, null=True)
+    phone = PhoneNumberField(("Телефон"), blank=True, null=True, max_length=30)
     date_joined = models.DateTimeField(('Дата регистрации'), auto_now_add=True)
     is_active = models.BooleanField(('Активирован'), default=False)
     firm_name = models.ForeignKey(

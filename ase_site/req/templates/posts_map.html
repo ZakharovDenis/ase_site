@@ -29,6 +29,7 @@
       window.location.replace('/request/' + id)
     });
   });
+
 </script>
 <style>
   .leaflet-container {
@@ -38,6 +39,7 @@
     z-index: 0;
     /* display: none; */
   }
+
 </style>
 {% endblock %}
 {% block content %}
@@ -46,52 +48,55 @@
 {% leaflet_js %}
 
 <body>
-  <table class="container">
+<table class="container">
     <tr>
-      <td style="width: 30%;">
-        {% if object_list|length %}
-        <table>
-          <tr>
-            <th><a href="/request/all/{{sort_option.0}}/{{sort_type.0}}" id='{{sort_option.0}}'>Рег. номер</a></th>
-            <th><a href="/request/all/{{sort_option.1}}/{{sort_type.1}}" id='{{sort_option.1}}'>Тип</a></th>
-            <th><a href="/request/all/{{sort_option.6}}/{{sort_type.2}}" id='{{sort_option.2}}'>Статус заявки</a></th>
-            <th><a href="/request/all/{{sort_option.9}}/{{sort_type.3}}" id='{{sort_option.3}}'>Ответственный</a></th>
-            <th>Цвет</th>
-          </tr>
-          {% endif %}
-          {%for post in object_list%}
-           <tr class='request' id="{{post.0.id}}" style="cursor: pointer">
-            <td>{{post.0.id}}</td>
-            <td>{{post.0.get_application_type_display}}</td>
-            <td id='status' status="{{post.0.status}}">{{post.0.get_status_display}}</td>
-            <td>{{post.0.application_sender}}</td>
-            <td style="background-color: {{post.1}};"></td>
-          </tr>
-          {% empty %}
-          Нет созданных отчетов.
-          {%endfor%}
-        </table>
-      </td>
-      <td>
-        <div class="leaflet-container">
-          {% leaflet_map "main" callback="map_init" %}
-        </div>
+        <td style="width: 30%;">
+            {% if object_list|length %}
+            <table>
+                <tr>
+                    <th><a href="/request/all/{{sort_option.0}}/{{sort_type.0}}" id='{{sort_option.0}}'>Рег. номер</a>
+                    </th>
+                    <th><a href="/request/all/{{sort_option.1}}/{{sort_type.1}}" id='{{sort_option.1}}'>Тип</a></th>
+                    <th><a href="/request/all/{{sort_option.6}}/{{sort_type.2}}" id='{{sort_option.2}}'>Статус
+                        заявки</a></th>
+                    <th><a href="/request/all/{{sort_option.9}}/{{sort_type.3}}"
+                           id='{{sort_option.3}}'>Ответственный</a></th>
+                    <th>Цвет</th>
+                </tr>
+                {% endif %}
+                {%for post in object_list%}
+                <tr class='request' id="{{post.0.id}}" style="cursor: pointer">
+                    <td>{{post.0.id}}</td>
+                    <td>{{post.0.get_application_type_display}}</td>
+                    <td id='status' status="{{post.0.status}}">{{post.0.get_status_display}}</td>
+                    <td>{{post.0.application_sender}}</td>
+                    <td style="background-color: {{post.1}};"></td>
+                </tr>
+                {% empty %}
+                Нет созданных отчетов.
+                {%endfor%}
+            </table>
+        </td>
+        <td>
+            <div class="leaflet-container">
+                {% leaflet_map "main" callback="map_init" %}
+            </div>
 
-      </td>
+        </td>
     </tr>
-  </table>
-  <div id="Modal" class="modal">
+</table>
+<div id="Modal" class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <p>Укажите причину, по которой вы отклоняете запрос.</p>
-      <form method="POST">
-        {% csrf_token %}
-        <textarea rows="10" cols="50" name="comment"></textarea>
-        <input type="submit" class="btnno" style="display: block;" value="Отклонить запрос">
-      </form>
+        <span class="close">&times;</span>
+        <p>Укажите причину, по которой вы отклоняете запрос.</p>
+        <form method="POST">
+            {% csrf_token %}
+            <textarea rows="10" cols="50" name="comment"></textarea>
+            <input type="submit" class="btnno" style="display: block;" value="Отклонить запрос">
+        </form>
     </div>
-  </div>
-  <script>
+</div>
+<script>
     var modal = document.getElementById("Modal");
     var btn = document.getElementById("disapprove");
     var span = document.getElementsByClassName("close")[0];
@@ -106,6 +111,7 @@
         modal.style.display = "none";
       }
     }
-  </script>
+
+</script>
 </body>
 {% endblock %}

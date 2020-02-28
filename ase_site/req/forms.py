@@ -1,15 +1,16 @@
-from django import forms
-from ase_site.data.models import Application
-from .widget import SelectTimeWidget
 from ase_site.auth_core.models import User
+from ase_site.data.models import Application
+from django import forms
+
+from .widget import SelectTimeWidget
 
 
 class beton_form(forms.ModelForm):
     ocr_specialist = forms.ModelChoiceField(
-        queryset=User.objects.filter(level=3), 
-        widget=forms.Select(), 
+        queryset=User.objects.filter(level=3),
+        widget=forms.Select(),
         label="Специалист ОСР",
-        )
+    )
 
     class Meta():
         model = Application
@@ -28,10 +29,10 @@ class beton_form(forms.ModelForm):
 
 class sand_pgs_form(forms.ModelForm):
     ocr_specialist = forms.ModelChoiceField(
-        queryset=User.objects.filter(level=3), 
-        widget=forms.Select(), 
+        queryset=User.objects.filter(level=3),
+        widget=forms.Select(),
         label="Специалист ОСР",
-        )
+    )
 
     class Meta:
         model = Application
