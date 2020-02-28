@@ -4,7 +4,7 @@ from .choises import STATUS, TYPE, DELIVERY
 
 
 class Company(models.Model):
-    name = models.CharField('Название организации',primary_key=True, max_length=100)
+    name = models.CharField('Название организации', primary_key=True, max_length=100)
 
     class Meta:
         verbose_name = 'Организация'
@@ -43,7 +43,7 @@ class Application(models.Model):
 
     application_type = models.IntegerField('Тип Заявки', choices=TYPE)
     status = models.IntegerField("Стадия заявки", choices=STATUS)
-    
+
     density = models.FloatField('Плотность материала')
     delivery_place = models.CharField('Место выгрузки материала', max_length=120, default='')
     delivery_date = models.DateField('Дата Поставки')
@@ -70,10 +70,12 @@ class Application(models.Model):
         User, on_delete=models.DO_NOTHING, verbose_name='Заявитель', related_name='application_sender'
     )
     application_receiver = models.ForeignKey(
-        User, on_delete=models.DO_NOTHING, verbose_name='Заявку Принял', related_name='application_receiver', null=True, blank=True
+        User, on_delete=models.DO_NOTHING, verbose_name='Заявку Принял', related_name='application_receiver', null=True,
+        blank=True
     )
     ocr_specialist = models.ForeignKey(
-        User, on_delete=models.DO_NOTHING, verbose_name='Специалист ОСР', related_name='ocr_specialist', null=True, blank=False
+        User, on_delete=models.DO_NOTHING, verbose_name='Специалист ОСР', related_name='ocr_specialist', null=True,
+        blank=False
     )
 
     disapprove_comment = models.TextField("Комментарий", null=True, blank=True)
@@ -90,7 +92,8 @@ class Car(models.Model):
     car_number = models.CharField("Номер машины", primary_key=True, editable=True, max_length=15)
     car_type = models.ForeignKey(CarType, on_delete=models.DO_NOTHING, verbose_name="Тип машины")
     gps = models.ForeignKey(GPS, on_delete=models.DO_NOTHING, verbose_name='ИД Датчика')
-    connected_application = models.ForeignKey(Application, on_delete=models.SET_NULL, null=True, related_name='connected_application', blank=True)
+    connected_application = models.ForeignKey(Application, on_delete=models.SET_NULL, null=True,
+                                              related_name='connected_application', blank=True)
 
     class Meta:
         verbose_name = 'Машина'
@@ -98,7 +101,7 @@ class Car(models.Model):
 
     def __str__(self):
         return str(self.car_type)
- 
+
 
 class GPSdata(models.Model):
     id = models.AutoField(primary_key=True, editable=False)

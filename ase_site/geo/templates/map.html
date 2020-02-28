@@ -6,17 +6,18 @@
 {% leaflet_js %}
 
 <div>
-<style>
+    <style>
     .leaflet-container {  /* all maps */
         width:  100%;
         height: 100%;
         z-index: 0;
     }
-</style>
-<div>
-    <p>{{x}} {{y}}</p>
-    {% leaflet_map "main" callback="map_init" %}
-</div>
+
+    </style>
+    <div>
+        <p>{{x}} {{y}}</p>
+        {% leaflet_map "main" callback="map_init" %}
+    </div>
 </div>
 <!-- <meta http-equiv="refresh" content="10" /> -->
 <script type="text/javascript">
@@ -28,5 +29,6 @@
         map.setView([lat, lon], 12);
         L.marker([lat, lon]).addTo(map);
     }
+
 </script>
 {% endblock %}

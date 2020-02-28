@@ -47,6 +47,7 @@
       })
     })
   });
+
 </script>
 <style>
   .leaflet-container {
@@ -54,6 +55,7 @@
     height: 80vh;
     z-index: 0;
     }
+
 </style>
 {% endblock %}
 {% block content %}
@@ -62,62 +64,62 @@
 {% leaflet_js %}
 
 <body onload="check_comment()">
-  <table class="container">
+<table class="container">
     <tr>
-      <td style="width: 30%;">
-        <table>
-          {% for line in application %}
-          <tr id="{{line.2}}">
-            <th>{{line.0}}</th>
-            <td>{{line.1}}</td>
-          </tr>
-          {% endfor %}
-        </table>
-      </td>
-      <td>
-        <div class="leaflet-container">
-          {% leaflet_map "main" callback="map_init" %}
-        </div>
+        <td style="width: 30%;">
+            <table>
+                {% for line in application %}
+                <tr id="{{line.2}}">
+                    <th>{{line.0}}</th>
+                    <td>{{line.1}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </td>
+        <td>
+            <div class="leaflet-container">
+                {% leaflet_map "main" callback="map_init" %}
+            </div>
 
-      </td>
+        </td>
     </tr>
-  </table>
-  {% if modal == True %}
-  <div id="CarModal" class="modal" style="display: block;">
+</table>
+{% if modal == True %}
+<div id="CarModal" class="modal" style="display: block;">
     <div class="modal-content">
-      <span class="close" id="no_cars_modal">&times;</span>
-      <p>Доступных машин сейчас нет</p>
+        <span class="close" id="no_cars_modal">&times;</span>
+        <p>Доступных машин сейчас нет</p>
     </div>
-  </div>
-  {% endif %}
-  <div id="DisModal" class="modal">
+</div>
+{% endif %}
+<div id="DisModal" class="modal">
     <div class="modal-content">
-      <span id='disapprove_modal' class="close">&times;</span>
-      <p>Укажите причину, по которой вы отклоняете запрос.</p>
-      <form method="POST">
-        {% csrf_token %}
-        <textarea rows="10" cols="50" name="comment"></textarea>
-        <input type="submit" class="btnno" style="display: block;" value="Отклонить запрос">
-      </form>
+        <span id='disapprove_modal' class="close">&times;</span>
+        <p>Укажите причину, по которой вы отклоняете запрос.</p>
+        <form method="POST">
+            {% csrf_token %}
+            <textarea rows="10" cols="50" name="comment"></textarea>
+            <input type="submit" class="btnno" style="display: block;" value="Отклонить запрос">
+        </form>
     </div>
-  </div>
-  {% if 'approve' in buttons %}
-  <a href="/request/{{app.id}}/approve" class="btnyes left">Подтвердить запрос</a>
-  {% endif %}
-  {% if 'disapprove' in buttons %}
-  <div class="btnno left" id='disapprove'>Отклонить запрос</div>
-  {% endif %}
-  {% if 'complete' in buttons %}
-  <a href="/request/{{app.id}}/approve" class="btnyes left">Запрос выполнен корректно</a>
-  {% endif %}
-  {% if 'mistake' in buttons %}
-  <div class="btnno left" id='disapprove'>Запрос выполнен некорректно</div>
-  {% endif %}
-  {% if 'take_to_work' in buttons %}
-  <a href="/request/{{app.id}}/approve" class="btnyes left">Взять в работу</a>
-  {% endif %}
-  <a href="print" class="btnreg left">Сохранить WORD</a>
-  <script>
+</div>
+{% if 'approve' in buttons %}
+<a href="/request/{{app.id}}/approve" class="btnyes left">Подтвердить запрос</a>
+{% endif %}
+{% if 'disapprove' in buttons %}
+<div class="btnno left" id='disapprove'>Отклонить запрос</div>
+{% endif %}
+{% if 'complete' in buttons %}
+<a href="/request/{{app.id}}/approve" class="btnyes left">Запрос выполнен корректно</a>
+{% endif %}
+{% if 'mistake' in buttons %}
+<div class="btnno left" id='disapprove'>Запрос выполнен некорректно</div>
+{% endif %}
+{% if 'take_to_work' in buttons %}
+<a href="/request/{{app.id}}/approve" class="btnyes left">Взять в работу</a>
+{% endif %}
+<a href="print" class="btnreg left">Сохранить WORD</a>
+<script>
     var btn = document.getElementById("disapprove");
     var span = document.getElementById("disapprove_modal");
     var modal = document.getElementById("DisModal");
@@ -133,8 +135,9 @@
         modal.style.display = "none";
       }
     }
-  </script>
-  <script>
+
+</script>
+<script>
     var modal = document.getElementById("CarModal");
     var span = document.getElementById("no_cars_modal");
     span.onclick = function () {
@@ -145,6 +148,7 @@
         modal.style.display = "none";
       }
     }
-  </script>
+
+</script>
 </body>
 {% endblock %}

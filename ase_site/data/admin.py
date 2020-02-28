@@ -1,19 +1,19 @@
-from django.contrib import admin
 from ase_site.data.models import Car, Company, GPS, GPSdata, CarType
+from django.contrib import admin
 
 
 class CarAdmin(admin.ModelAdmin):
-    list_display = ('car_number','car_type', 'gps')
-    fieldsets=[
-        (None,  {'fields': ['car_number','car_type', 'gps','connected_application']}),
+    list_display = ('car_number', 'car_type', 'gps')
+    fieldsets = [
+        (None, {'fields': ['car_number', 'car_type', 'gps', 'connected_application']}),
     ]
-    search_fields = ('car_number','car_type', 'gps','connected_application')
+    search_fields = ('car_number', 'car_type', 'gps', 'connected_application')
 
 
 class CarTypeAdmin(admin.ModelAdmin):
     list_display = ('car_type',)
-    fieldsets=[
-        (None,  {'fields': ['car_type',]}),
+    fieldsets = [
+        (None, {'fields': ['car_type', ]}),
     ]
     search_fields = ('car_type',)
 
@@ -34,8 +34,8 @@ class GPSAdmin(admin.ModelAdmin):
 
 
 class GPSdataAdmin(admin.ModelAdmin):
-    list_display=('id_gps', 'date', 'latitude', 'longitude')
-    
+    list_display = ('id_gps', 'date', 'latitude', 'longitude')
+
     def has_add_permission(self, request, obj=None):
         return True
 

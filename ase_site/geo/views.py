@@ -1,13 +1,13 @@
 import json
-from django.db.utils import IntegrityError
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.safestring import mark_safe
+from ase_site.data.models import GPS, GPSdata
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.utils import IntegrityError
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
+from django.utils.safestring import mark_safe
+from django.views.decorators.csrf import csrf_exempt
 
-from ase_site.data.models import GPS, GPSdata
 
 # @csrf_exempt
 # def index(request):
@@ -29,7 +29,7 @@ from ase_site.data.models import GPS, GPSdata
 #         except:
 #             return HttpResponse('no file(thats fine, just send POST)')
 #         print(outline[0], outline[1])
-#]         return render(request,'ase_site/geo/templates/map.html',{'x':outline[0],'y':outline[1]})
+# ]         return render(request,'ase_site/geo/templates/map.html',{'x':outline[0],'y':outline[1]})
 
 
 @csrf_exempt
@@ -50,6 +50,7 @@ def post_data(request):
             return JsonResponse({'message': 'invalid json'})
     return HttpResponse(status=200)
 
+
 @csrf_exempt
 def get_data(request):
     if request.method == "POST":
@@ -63,24 +64,25 @@ def get_data(request):
         except ObjectDoesNotExist:
             return JsonResponse({'message': 'No such GPS'})
     return HttpResponse(status=200)
-    
+
+
 @csrf_exempt
 def index(request):
-    if request.method=="POST":
+    if request.method == "POST":
         data = str(request.body)[2:-1]
-        with open('log.txt','a') as file:
-            file.write(data+'\n')
+        with open('log.txt', 'a') as file:
+            file.write(data + '\n')
             file.close()
         return HttpResponse(data)
     else:
         try:
-            with open('log.txt','r') as file:
+            with open('log.txt', 'r') as file:
                 try:
                     for line in file:
-                        outline=line.split(',')
+                        outline = line.split(',')
                 except:
                     return HttpResponse('empty file')
                 file.close()
         except:
             return HttpResponse('no file(thats fine, just send POST)')
-        return render(request,'ase_site/geo/templates/map.html',{'x':outline[0],'y':outline[1]})
+        return render(request, 'ase_site/geo/templates/map.html', {'x': outline[0], 'y': outline[1]})

@@ -1,10 +1,9 @@
-from django.urls import path
-from django.conf.urls import url
-from django.views.generic import ListView, DetailView
 from ase_site.data.models import Application
+from django.conf.urls import url
+from django.urls import path
+from django.views.generic import ListView, DetailView
 
-from. import views
-
+from . import views
 
 urlpatterns = [
     # url(r'all/', ListView.as_view(

@@ -1,5 +1,3 @@
-
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -16,7 +14,6 @@ SECRET_KEY = 'a@_n5$$i%(ruck^34az9e3u(7=n#))ci#o6i_3hzqd2uvm%28m'
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 
@@ -71,7 +68,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ase_site.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -94,7 +90,6 @@ else:
         }
     }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -114,7 +109,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -127,7 +121,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -143,8 +136,8 @@ LOGOUT_REDIRECT_URL = '/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static_root')
 STATIC_URL = '/static/'
 
-#STATIC_ROOT = os.path.join(BASE_DIR,'static')
-#STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# STATIC_ROOT = os.path.join(BASE_DIR,'static')
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

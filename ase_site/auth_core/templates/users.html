@@ -8,35 +8,35 @@
 {% block content %}
 
 <body>
-  <table style="border: none;">
+<table style="border: none;">
     <tr>
-      <td>
-        {% if object_list|length %}
-        <table>
-          <tr>
-            <th>Фамилия</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <th>Телефон</th>
-            <th>Почта</th>
-            <th>Компания</th>
-            <th>Должность</th>
-          </tr>
-          {% endif %}
-          {%for user in object_list%}
-          <tr class='users'>
-            <td>{{user.last_name}}</td>
-            <td>{{user.first_name}}</td>
-            <td>{{user.fathers_name}}</td>
-            <td>{{user.phone}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.firm_name}}</td>
-            <td>{{user.get_level_display}}</td>
-          </tr>
-          {%endfor%}
-        </table>
-      </td>
+        <td>
+            {% if object_list|length %}
+            <table>
+                <tr>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Телефон</th>
+                    <th>Почта</th>
+                    <th>Компания</th>
+                    <th>Должность</th>
+                </tr>
+                {% endif %}
+                {%for user in object_list%}
+                <tr class='users'>
+                    <td>{{user.last_name}}</td>
+                    <td>{{user.first_name}}</td>
+                    <td>{{user.fathers_name}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.firm_name}}</td>
+                    <td>{{user.get_level_display}}</td>
+                </tr>
+                {%endfor%}
+            </table>
+        </td>
     </tr>
-  </table>
+</table>
 </body>
 {% endblock %}
