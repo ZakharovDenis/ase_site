@@ -1,5 +1,5 @@
 import json
-
+from django.db.utils import IntegrityError
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -46,9 +46,11 @@ def post_data(request):
             return JsonResponse({'message': 'saved'})
         except KeyError:
             return JsonResponse({'message': 'invalid json'})
+        except IntegrityError:
+            return JsonResponse({'message': 'invalid json'})
     return HttpResponse(status=200)
 
-
+@csrf_exempt
 def get_data(request):
     if request.method == "POST":
         json_data = json.loads(request.body)
@@ -81,5 +83,4 @@ def index(request):
                 file.close()
         except:
             return HttpResponse('no file(thats fine, just send POST)')
-        print(outline[0], outline[1])
         return render(request,'ase_site/geo/templates/map.html',{'x':outline[0],'y':outline[1]})

@@ -1,53 +1,53 @@
 from django.contrib import admin
-from ase_site.data.models import Car, Company, Driver,GPS, GPSdata
+from ase_site.data.models import Car, Company, GPS, GPSdata, CarType
 
 
 class CarAdmin(admin.ModelAdmin):
-    list_display=('cartype','label','max_weight','driver','gps')
+    list_display = ('car_number','car_type', 'gps')
     fieldsets=[
-        (None,  {'fields':['cartype','label','max_weight','driver','gps']}),
+        (None,  {'fields': ['car_number','car_type', 'gps','connected_application']}),
     ]
-    search_fields=('cartype','label','max_weight','driver','gps')
+    search_fields = ('car_number','car_type', 'gps','connected_application')
+
+
+class CarTypeAdmin(admin.ModelAdmin):
+    list_display = ('car_type',)
+    fieldsets=[
+        (None,  {'fields': ['car_type',]}),
+    ]
+    search_fields = ('car_type',)
+
 
 class CompanyAdmin(admin.ModelAdmin):
-    list_display=('name','city','INN')
-    search_fields=('name','city','INN')
+    list_display = ('name',)
+    search_fields = ('name',)
 
-class DriverAdmin(admin.ModelAdmin):
-    list_display=('name','last_name','fathers_name','phone_number','org')
-    fieldsets=[
-        (None,  {'fields':['name','last_name','fathers_name','phone_number','org']}),
-    ]
-    search_fields=('name','last_name','fathers_name','phone_number','org')
 
 class GPSAdmin(admin.ModelAdmin):
-    list_display=('id',)
-    add_fieldsets=[
-        (None,{'fields':['id',]}),
+    list_display = ('id',)
+    add_fieldsets = [
+        (None, {'fields': ['id', ]}),
     ]
-    def has_change_permission(self,request,obj=None):
+
+    def has_change_permission(self, request, obj=None):
         return False
 
-class WorkGroupAdmin(admin.ModelAdmin):
-    fieldset=[
-        (None,{'fields':['name','place','org']})
-    ]
-    filter_horizontal=('people',)
 
 class GPSdataAdmin(admin.ModelAdmin):
-    readonly_fields=('id','date','latitude','longitude')
+    list_display=('id_gps', 'date', 'latitude', 'longitude')
     
-    def has_add_permission(self,request,obj=None):
+    def has_add_permission(self, request, obj=None):
         return True
 
-    def has_change_permission(self,request,obj=None):
-        return False
+    def has_change_permission(self, request, obj=None):
+        return True
 
-    def has_delete_permission(self,request,obj=None):
-        return False
+    def has_delete_permission(self, request, obj=None):
+        return True
 
-admin.site.register(Car,CarAdmin)
-admin.site.register(Company,CompanyAdmin)
-admin.site.register(Driver,DriverAdmin)
-admin.site.register(GPS,GPSAdmin)
-admin.site.register(GPSdata,GPSdataAdmin)
+
+admin.site.register(Car, CarAdmin)
+admin.site.register(CarType, CarTypeAdmin)
+admin.site.register(Company, CompanyAdmin)
+admin.site.register(GPS, GPSAdmin)
+admin.site.register(GPSdata, GPSdataAdmin)

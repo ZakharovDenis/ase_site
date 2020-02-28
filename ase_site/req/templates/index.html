@@ -1,11 +1,11 @@
-{% extends "static/static_files/html/ase_wrap.html" %}
+{% extends "static/html/ase_wrap.html" %}
 {% block content %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <title>Запрос документа</title>
-    {% load staticfiles %}
+    {% load static %}
     <link rel="stylesheet" href="{% static 'css/buttons.css'%}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/form-style.css'%}" type="text/css">
 </head>
@@ -14,7 +14,16 @@
     <form method="POST" autocomplete="off">
         {% csrf_token %}
     <table>
+        <caption><b>{{name}}</b></caption>
         {{ form }}
+        <tr>
+            <th><label for="id_delivery_date">Дата Поставки</label></th>
+            <td><input name="delivery_date" type="date" required id="id_delivery_date"></td>
+        </tr>
+        <tr>
+            <th><label  for="id_delivery_date">Время Поставки</label></th>
+            <td><input name="delivery_time" type="time" required id="id_delivery_date"></td>
+        </tr>
     </table>
     <input type="submit" value="Отправить запрос" class="btnmain">
   </form>

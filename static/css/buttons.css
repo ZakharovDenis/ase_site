@@ -30,9 +30,9 @@
   padding: .7em 1.5em; /* отступ от текста */
   outline: none; /* убирать контур в Mozilla */
   border-radius: .5em;
-  margin: auto;
   overflow: hidden;
   display: inline-block;
+  margin: 1rem;
 }
 .btnmain:hover {
   background: rgb(0,85,135);

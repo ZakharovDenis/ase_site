@@ -1,0 +1,29 @@
+
+table { 
+    width: 100%; 
+    border: 4px double black;
+    border-collapse: collapse; 
+   }
+th { 
+    text-align: left;
+    background: #ccc; 
+    padding: 5px;
+    border: 1px solid black;
+    word-break: break-word;
+}
+td { 
+    padding: 5px; 
+    border: 1px solid black;
+    word-break: break-word;
+}
+a{
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+form{
+    display: inline-block;
+    vertical-align: top;
+    margin: 1rem;
+}

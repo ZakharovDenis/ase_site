@@ -1,8 +1,11 @@
 body {
-margin: 0;
-padding: 0;
+top: 0;
+left: 0;
 font-family: sans-serif;
-background: no-repeat center center fixed;
+background: url(images/bg.jpg) no-repeat center center fixed; 
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
 background-size: cover;
 }
 
@@ -13,8 +16,6 @@ background-size: cover;
   transform: translate(-50%,-50%);
   color:rgb(23, 126, 204);
   background-color: #FFFFFF ;
-  /* border: 0.2em solid #1B9CFC; */
-  /* border-radius: 1em; */
   overflow: hidden;
   opacity: 1;
   padding-left: 2%;

@@ -18,11 +18,26 @@ select{
     outline: none;
     border: none;
 }
-input{
+tbody input{
     width: 100%;
+}
+
+input{
     border: none;
 }
 input:active{
     width: 100%;
     border: none;
+}
+table{
+    align-self: center;
+    margin-top: 1rem;
+}
+
+.btnmain{
+    margin:0;
+}
+
+.red_background {
+    background-color: rgba(255, 119, 119, 0.5);
 }

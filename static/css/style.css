@@ -7,6 +7,7 @@ body .content{
   overflow: hidden;
 }
 .navbar {
+  font-family: sans-serif;
   overflow: hidden;
   background-color: rgb(0, 64, 112);
   position: sticky;
@@ -49,13 +50,19 @@ body .content{
   font-size: 1em;
   border: none;
   cursor: pointer;
+  text-align: center;
+  padding: 1em 1.5em;
+  text-decoration: none;
 }
 
 .dropdown-content {
   display: none;
   position: relative;
   background-color: rgb(0, 64, 112);
-  transition: inherit 0.1s ease-in-out 0.1s;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  transition: height 1s, width 1s, padding 1s, visibility 1s, opacity 0.5s ease-out;
 }
 
 .dropdown-content a {
@@ -70,6 +77,11 @@ body .content{
 
 .dropdown:hover .dropdown-content {
   display: inline-flex;
+  width: 100%;
+  height: 100%;
+  visibility: visible;
+  transition: height 1s, width 1s, padding 1s, visibility 1s, opacity 0.5s ease-out;
+
 }
 
 .dropdown-content a:hover {
@@ -80,7 +92,45 @@ body .content{
   background-color: rgb(0, 95, 168);
 }
 
-@media screen and (max-width: 35em) {
+table.container {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.container .left {
+  display: inline-block;
+  vertical-align: bottom;
+  height: 75vh;
+  overflow-y: auto;
+}
+.container .right {
+  display: inline-block;
+  vertical-align: bottom;
+  height: 75vh;
+}
+
+.noHover{
+  pointer-events: none;
+}
+
+iframe{
+  border: 0;
+}
+
+.wh100{
+  width: 100%;
+  height: 100%;
+}
+
+tr.clicked{
+  background-color: rgba(0, 100, 172, 0.384);
+}
+
+.right{
+  float: right;
+}
+
+@media screen and (max-width: 51em) {
   .navbar a {
     padding: 0.5em;
     float: none;
@@ -120,5 +170,4 @@ body .content{
   .dropdown:hover .dropdown-content {
     display: block;
   }
-  
 }

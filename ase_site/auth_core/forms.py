@@ -5,6 +5,8 @@ from .choices import *
 
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import GroupAdmin
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 from .models import User
 
@@ -22,10 +24,16 @@ class UserForm(forms.ModelForm):
     confirm_password=forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder':'Подтвердите пароль','class':'textbox'}))
     firm_name=forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder':'Название фирмы','class':'textbox'}))
     level=forms.ChoiceField(label='', choices=STATUS_CHOICES,widget=forms.Select(attrs={'placeholder':'Статус сотрудника','class':'textbox'}))
+    phone = cellphone = PhoneNumberField(
+        widget=PhoneNumberPrefixWidget(attrs={'placeholder': (u'Cellphone'), 'class': "form-control"}),
+        label=(u'Cellphone number'),
+        required=False,
+        initial='+7'
+    )
 
     class Meta():
         model=User
-        fields=('first_name','last_name','fathers_name','email','firm_name','level','password')
+        fields=('first_name','last_name','fathers_name','email','firm_name','level','password', 'phone')
 
     def clean_email(self):
         email=self.cleaned_data.get("email")
@@ -76,6 +84,6 @@ class UserAdminChangeForm(forms.ModelForm):
     password=ReadOnlyPasswordHashField()
     class Meta:
         model=User
-        fields=('email','password','first_name','last_name','fathers_name','email','firm_name','level','is_active')
+        fields=('email','password','first_name','last_name','fathers_name','email','firm_name','level','is_active', 'phone')
     def clean_password(self):
         return self.initial["password"]

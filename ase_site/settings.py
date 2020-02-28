@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'ase_site.geo',
     'ase_site.auth_core',
     'leaflet',
+    'phonenumber_field',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -34,9 +35,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-AUTH_USER_MODEL='auth_core.User'
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBackend']
-LOGIN_URL='/auth/login/'
+AUTH_USER_MODEL = 'auth_core.User'
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.AllowAllUsersModelBackend']
+LOGIN_URL = '/auth/login/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,12 +75,24 @@ WSGI_APPLICATION = 'ase_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# if os.name == "nt":
+if True:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'ase',
+            'USER': 'ase',
+            'PASSWORD': '123',
+            'HOST': 'localhost',
+        }
+    }
 
 
 # Password validation
@@ -106,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -126,14 +140,11 @@ STATICFILES_FINDERS = (
 
 LOGOUT_REDIRECT_URL = '/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'static_root')
 STATIC_URL = '/static/'
 
 #STATIC_ROOT = os.path.join(BASE_DIR,'static')
 #STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/static_root')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static/static_files'),
-]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,  'static', 'media')
-
